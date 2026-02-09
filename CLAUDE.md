@@ -1,66 +1,87 @@
-<!-- OPENSPEC:START -->
-# OpenSpec Instructions
 
-These instructions are for AI assistants working in this project.
+# Cultainer - Project Guide
 
-Always open `@/openspec/AGENTS.md` when the request:
-- Mentions planning or proposals (words like proposal, spec, change, plan)
-- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
-- Sounds ambiguous and you need the authoritative spec before coding
+## Overview
 
-Use `@/openspec/AGENTS.md` to learn:
-- How to create and apply change proposals
-- Spec format and conventions
-- Project structure and guidelines
+Cultainer is a comprehensive cross-platform (iOS / macOS / Web) media consumption tracker and knowledge extraction tool.
 
-Keep this managed block so 'openspec update' can refresh the instructions.
+## Quick Reference
 
-<!-- OPENSPEC:END -->
-
-# Cultainer - 專案指引
-
-## 專案概述
-
-Cultainer 是一個全方位跨平台（iOS / macOS / Web）閱聽紀錄與知識擷取工具。
-
-## 快速參考
-
-### 技術棧
+### Tech Stack
 - **Frontend**: Flutter (Dart) + Riverpod
 - **Backend**: Firebase (Firestore, Auth, Storage)
 - **AI**: Google ML Kit (OCR), Gemini Pro
 - **APIs**: Google Books, TMDB, Spotify
-- **IDE**: VS Code（開發）→ Xcode（僅發布簽名）
+- **IDE**: VS Code (development) → Xcode (release signing only)
 
-### 常用指令
+### Common Commands
 ```bash
-flutter run                    # 執行開發版
-flutter test                   # 執行測試
-flutter analyze                # 靜態分析
-dart format lib test           # 格式化程式碼
-dart run build_runner build    # 產生程式碼
+flutter run                    # Run dev build
+flutter test                   # Run tests
+flutter analyze                # Static analysis
+dart format lib test           # Format code
+dart run build_runner build    # Code generation
 ```
 
-### 目錄結構
-- `lib/features/` - 功能模組（auth, home, journal, explore, calendar, profile, entry）
-- `lib/core/` - 共用元件、主題、工具
-- `lib/models/` - 資料模型
-- `lib/repositories/` - 資料存取層
-- `lib/services/` - 外部服務整合
+### Directory Structure
+- `lib/features/` - Feature modules (auth, home, journal, explore, calendar, profile, entry)
+- `lib/core/` - Shared components, themes, utilities
+- `lib/models/` - Data models
+- `lib/repositories/` - Data access layer
+- `lib/services/` - External service integrations
 
-### 開發規範
-- Commit 格式：`type(scope): description`
-- Linter：`very_good_analysis`
-- 檔案命名：`snake_case.dart`
-- 類別命名：`PascalCase`
+### Coding Conventions
+- Commit format: `type(scope): description`
+- Linter: `very_good_analysis`
+- File naming: `snake_case.dart`
+- Class naming: `PascalCase`
 
-## 開發階段
+## Development Phases
 
-| Phase | 狀態 | 內容 |
-|-------|------|------|
-| 1 | 待開發 | 核心基礎（Auth、Entry CRUD、API 整合） |
-| 2 | 待開發 | 知識擷取（OCR、AI 輔助） |
-| 3 | 待開發 | 探索推薦（Explore、Calendar） |
-| 4 | 待開發 | 平台擴展與發布 |
+| Phase | Status | Description |
+|-------|--------|-------------|
+| 1 | Pending | Core foundation (Auth, Entry CRUD, API integration) |
+| 2 | Pending | Knowledge extraction (OCR, AI assistant) |
+| 3 | Pending | Explore & recommendations (Explore, Calendar) |
+| 4 | Pending | Platform expansion & release |
 
-詳見 `openspec/changes/` 目錄中的各階段提案。
+See `openspec/changes/` for detailed proposals per phase.
+
+## Skills (Mandatory Rules for AI Assistants)
+
+### Documentation Sync
+
+When there are new features, changes, or important fixes, you **must** do all of the following:
+
+1. **Update README.md** (English) — Add usage instructions and notes in the relevant section
+2. **Update README.zh-TW.md** (Traditional Chinese) — Translate and add the same content
+3. **Update CHANGELOG.md** — Add entries under `[Unreleased]` following [Keep a Changelog](https://keepachangelog.com/) format
+
+#### CHANGELOG Format
+
+```markdown
+## [Unreleased]
+### Added       — New features
+### Changed     — Changes to existing features
+### Deprecated  — Features to be removed in the future
+### Removed     — Removed features
+### Fixed       — Bug fixes
+### Security    — Security patches
+```
+
+#### Notes
+- Both READMEs must stay in sync (different languages, same information)
+- CHANGELOG entries are written in English
+- Entry format: `- <brief description> (#PR or commit ref)`
+- On release, rename `[Unreleased]` to a version number and date: `## [x.y.z] - YYYY-MM-DD`
+
+### Commit Rules
+
+- Follow [Conventional Commits](https://www.conventionalcommits.org/) format: `type(scope): description`
+- **Split commits by concern**: When there are many changed files, group them into separate commits based on what they change. Do NOT lump everything into a single commit. For example:
+  - Config files → one commit
+  - Docs/README changes → one commit
+  - Feature code → one commit per feature or logical unit
+  - Test files → one commit (or grouped with their feature)
+- Each commit should be a single logical change that can be understood on its own
+- When asked to commit, review all staged/unstaged changes first and propose a batching plan if multiple concerns are detected

@@ -1,64 +1,66 @@
 # Cultainer
 
-全方位跨平台（iOS / macOS / Web）閱聽紀錄與知識擷取工具。
+A comprehensive cross-platform (iOS / macOS / Web) media consumption tracker and knowledge extraction tool.
 
-## 功能特色
+**English** | [繁體中文](README.zh-TW.md)
 
-- 📚 **統一管理** - 書籍、電影、影集、音樂閱聽紀錄
-- 📸 **OCR 擷取** - 拍照即時辨識書本文字
-- 🤖 **AI 輔助** - Gemini Pro 智慧分析與摘要
-- 🔍 **探索推薦** - 基於創作者的相關作品推薦
-- 📅 **時間軸** - 月曆視圖回顧閱聽歷程
-- ☁️ **雲端同步** - Firebase 跨裝置同步
+## Features
 
-## 技術架構
+- 📚 **Unified Management** - Track books, movies, TV shows, and music
+- 📸 **OCR Extraction** - Capture and recognize text from books instantly
+- 🤖 **AI Assistant** - Smart analysis and summaries powered by Gemini Pro
+- 🔍 **Discovery** - Recommendations based on creators you've enjoyed
+- 📅 **Timeline** - Calendar view to review your media journey
+- ☁️ **Cloud Sync** - Firebase-powered cross-device synchronization
 
-- **前端**: Flutter (Dart)
-- **後端**: Firebase (Firestore, Auth, Storage)
+## Tech Stack
+
+- **Frontend**: Flutter (Dart)
+- **Backend**: Firebase (Firestore, Auth, Storage)
 - **AI**: Google ML Kit (OCR), Gemini Pro
-- **外部 API**: Google Books, TMDB, Spotify
+- **External APIs**: Google Books, TMDB, Spotify
 
-## 開發環境設定
+## Development Setup
 
-### 前置需求
+### Prerequisites
 
 - Flutter SDK >= 3.19
 - Dart SDK >= 3.3
-- VS Code + Flutter 擴充套件（主要開發環境）
-- Xcode（僅用於 iOS/macOS 模擬器執行與發布簽名）
-- Android Studio 或 Android SDK（Android 模擬器）
+- VS Code + Flutter extension (primary development environment)
+- Xcode (only for iOS/macOS simulator and release signing)
+- Android Studio or Android SDK (Android emulator)
 - Firebase CLI
 
-> 💡 **開發策略**: 日常開發使用 VS Code，僅在 App Store 上架時才需要開啟 Xcode 進行簽名設定。
+> 💡 **Development Strategy**: Use VS Code for daily development. Xcode is only needed for App Store signing and submission.
 
-### 安裝步驟
+### Installation
 
 ```bash
-# 1. Clone 專案
+# 1. Clone the repository
 git clone https://github.com/your-username/cultainer.git
 cd cultainer
 
-# 2. 安裝依賴
+# 2. Install dependencies
 flutter pub get
 
-# 3. 設定環境變數
+# 3. Set up environment variables
 cp .env.example .env
-# 編輯 .env 填入 API Keys
+# Edit .env and fill in your API keys
 
-# 4. 設定 Firebase
+# 4. Configure Firebase
 flutterfire configure
 
-# 5. 安裝 pre-commit hooks
+# 5. Install pre-commit hooks
 dart pub global activate lefthook
 lefthook install
 
-# 6. 執行應用程式
+# 6. Run the app
 flutter run
 ```
 
-### 環境變數
+### Environment Variables
 
-建立 `.env` 檔案：
+Create a `.env` file:
 
 ```env
 TMDB_API_KEY=your_tmdb_api_key
@@ -66,58 +68,111 @@ SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
 ```
 
-## 專案結構
+## Project Structure
 
 ```
 lib/
-├── main.dart              # 應用程式入口
-├── app/                   # App 設定、路由
-├── core/                  # 共用元件、主題、工具
-├── features/              # 功能模組
-│   ├── auth/              # 認證
-│   ├── home/              # 首頁
-│   ├── journal/           # 日誌
-│   ├── explore/           # 探索
-│   ├── calendar/          # 月曆
-│   ├── profile/           # 個人頁
-│   └── entry/             # 紀錄管理
-├── models/                # 資料模型
-├── repositories/          # 資料存取層
-└── services/              # 外部服務整合
+├── main.dart              # Application entry point
+├── app/                   # App configuration, routing
+├── core/                  # Shared components, themes, utilities
+├── features/              # Feature modules
+│   ├── auth/              # Authentication
+│   ├── home/              # Home page
+│   ├── journal/           # Journal
+│   ├── explore/           # Explore
+│   ├── calendar/          # Calendar
+│   ├── profile/           # Profile
+│   └── entry/             # Entry management
+├── models/                # Data models
+├── repositories/          # Data access layer
+└── services/              # External service integrations
 ```
 
-## 開發指令
+## Development Commands
 
 ```bash
-# 格式化程式碼
+# Format code
 dart format lib test
 
-# 靜態分析
+# Static analysis
 flutter analyze
 
-# 執行測試
+# Run tests
 flutter test
 
-# 產生程式碼（freezed, json_serializable）
+# Generate code (freezed, json_serializable)
 dart run build_runner build
 
-# 建置 iOS
+# Build iOS
 flutter build ios
 
-# 建置 macOS
+# Build macOS
 flutter build macos
 
-# 建置 Web
+# Build Web
 flutter build web
 ```
 
-## 開發規範
+## VS Code Shortcuts
 
-- 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 格式
-- 使用 `very_good_analysis` linter
-- 程式碼需通過 pre-commit hooks 檢查
-- 詳見 [openspec/project.md](openspec/project.md)
+### Launch & Debug
 
-## 授權
+| Shortcut | Action |
+|----------|--------|
+| `F5` | Start Debug mode (select target device in sidebar) |
+| `Ctrl+F5` | Start Release mode |
+| `Shift+F5` | Stop execution |
+| `Cmd+Shift+F5` | Restart |
+
+### Common Tasks
+
+Press `Cmd+Shift+P` → type `Tasks: Run Task` to execute:
+
+| Task Name | Description |
+|-----------|-------------|
+| Flutter: Get Packages | Install dependencies (`flutter pub get`) |
+| Flutter: Build Runner | Generate code (freezed, json_serializable) |
+| Flutter: Build Runner (Watch) | Watch and generate code continuously |
+| Flutter: Run Tests | Run tests |
+| Flutter: Run Tests with Coverage | Run tests with coverage report |
+| Flutter: Analyze | Static analysis |
+| Flutter: Format | Format code |
+| Flutter: Clean | Clean cache and reinstall dependencies |
+| Flutter: Build iOS (Release) | Build iOS release version |
+| Flutter: Build Web | Build web version |
+| Pre-commit Check | Full check (format + analyze + test) |
+
+### Debug Configurations
+
+In the `Run and Debug` panel (`Cmd+Shift+D`):
+
+| Configuration | Description |
+|---------------|-------------|
+| cultainer (debug) | Default Debug mode |
+| cultainer (profile) | Profile mode (performance analysis) |
+| cultainer (release) | Release mode |
+| cultainer (iOS Simulator) | Run on iOS Simulator |
+| cultainer (Chrome) | Run in Chrome browser |
+| cultainer (macOS) | Run on macOS |
+
+### Recommended Extensions
+
+VS Code will prompt you to install recommended extensions when opening the project:
+
+- **Dart** - Dart language support
+- **Flutter** - Flutter development tools
+- **Awesome Flutter Snippets** - Code snippets
+- **Error Lens** - Inline error display
+- **GitLens** - Git enhancement tools
+- **Todo Tree** - TODO comment tracking
+
+## Development Guidelines
+
+- Follow [Conventional Commits](https://www.conventionalcommits.org/) format
+- Use `very_good_analysis` linter
+- Code must pass pre-commit hooks
+- See [openspec/project.md](openspec/project.md) for details
+
+## License
 
 MIT License
