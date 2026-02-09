@@ -33,6 +33,24 @@ A comprehensive cross-platform (iOS / macOS / Web) media consumption tracker and
 
 > 💡 **Development Strategy**: Use VS Code for daily development. Xcode is only needed for App Store signing and submission.
 
+### Installing Flutter & Dart
+
+Follow the official manual installation guide for your platform:
+
+👉 **https://docs.flutter.dev/install/manual**
+
+1. Download the Flutter SDK for your OS (macOS, Windows, Linux)
+2. Extract to a desired location (e.g., `~/development/flutter`)
+3. Add Flutter to your PATH:
+   ```bash
+   # Add to ~/.zshrc or ~/.bashrc
+   export PATH="$PATH:$HOME/development/flutter/bin"
+   ```
+4. Run `flutter doctor` to verify installation and check for dependencies
+5. Install any missing dependencies reported by `flutter doctor`
+
+> ℹ️ Dart SDK is bundled with Flutter — no separate installation required.
+
 ### Installation
 
 ```bash

@@ -33,6 +33,24 @@
 
 > 💡 **開發策略**: 日常開發使用 VS Code，僅在 App Store 上架時才需要開啟 Xcode 進行簽名設定。
 
+### 安裝 Flutter 與 Dart
+
+請參考官方手動安裝指南：
+
+👉 **https://docs.flutter.dev/install/manual**
+
+1. 下載對應作業系統的 Flutter SDK（macOS、Windows、Linux）
+2. 解壓縮至指定位置（例如：`~/development/flutter`）
+3. 將 Flutter 加入 PATH 環境變數：
+   ```bash
+   # 新增至 ~/.zshrc 或 ~/.bashrc
+   export PATH="$PATH:$HOME/development/flutter/bin"
+   ```
+4. 執行 `flutter doctor` 驗證安裝並檢查相依項目
+5. 根據 `flutter doctor` 的提示安裝缺少的相依項目
+
+> ℹ️ Dart SDK 已包含在 Flutter 中，不需另外安裝。
+
 ### 安裝步驟
 
 ```bash
