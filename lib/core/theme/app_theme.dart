@@ -89,8 +89,8 @@ abstract final class AppTheme {
     );
   }
 
-  static CardTheme get _cardTheme {
-    return CardTheme(
+  static CardThemeData get _cardTheme {
+    return CardThemeData(
       color: AppColors.surface,
       elevation: 0,
       margin: EdgeInsets.zero,

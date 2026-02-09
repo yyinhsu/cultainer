@@ -63,29 +63,31 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   
-  assets:
-    - assets/images/
-    - assets/icons/
-    - .env
+  # Note: Uncomment assets when files are added
+  # assets:
+  #   - assets/images/
+  #   - assets/icons/
+  #   - .env
   
-  fonts:
-    - family: Fraunces
-      fonts:
-        - asset: assets/fonts/Fraunces-SemiBold.ttf
-          weight: 600
-    
-    - family: DMSans
-      fonts:
-        - asset: assets/fonts/DMSans-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/DMSans-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/DMSans-SemiBold.ttf
-          weight: 600
-    
-    - family: Inter
-      fonts:
-        - asset: assets/fonts/Inter-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/Inter-Medium.ttf
-          weight: 500
+  # Note: Uncomment fonts after downloading from Google Fonts
+  # fonts:
+  #   - family: Fraunces
+  #     fonts:
+  #       - asset: assets/fonts/Fraunces-SemiBold.ttf
+  #         weight: 600
+  #   
+  #   - family: DMSans
+  #     fonts:
+  #       - asset: assets/fonts/DMSans-Regular.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/DMSans-Medium.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/DMSans-SemiBold.ttf
+  #         weight: 600
+  #   
+  #   - family: Inter
+  #     fonts:
+  #       - asset: assets/fonts/Inter-Regular.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/Inter-Medium.ttf
+  #         weight: 500

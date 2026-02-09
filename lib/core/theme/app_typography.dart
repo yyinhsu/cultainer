@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 /// Typography constants for the Cultainer app.
 ///
 /// Font configuration:
-/// - Fraunces: Headers and display text
-/// - DM Sans: Body text and buttons
-/// - Inter: System text and numbers
+/// - Fraunces: Headers and display text (fallback to system serif)
+/// - DM Sans: Body text and buttons (fallback to system sans)
+/// - Inter: System text and numbers (fallback to system sans)
+///
+/// Note: Custom fonts are commented out in pubspec.yaml until downloaded.
+/// Download from Google Fonts and uncomment to enable.
 abstract final class AppTypography {
-  // Font families
-  static const String fontFamilyDisplay = 'Fraunces';
-  static const String fontFamilyBody = 'DMSans';
-  static const String fontFamilySystem = 'Inter';
+  // Font families (using null for system default until custom fonts added)
+  static const String? fontFamilyDisplay = null; // 'Fraunces' when available
+  static const String? fontFamilyBody = null; // 'DMSans' when available
+  static const String? fontFamilySystem = null; // 'Inter' when available
 
   // Display styles (Fraunces)
   static const TextStyle displayLarge = TextStyle(

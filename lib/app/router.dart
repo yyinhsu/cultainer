@@ -8,8 +8,6 @@ import '../features/journal/journal_page.dart';
 import '../features/profile/profile_page.dart';
 import 'shell_scaffold.dart';
 
-part 'router.g.dart';
-
 /// Global navigation key for accessing navigator from anywhere.
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
