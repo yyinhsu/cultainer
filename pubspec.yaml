@@ -43,6 +43,7 @@ dependencies:
   # JSON Serialization
   json_annotation: ^4.9.0
   freezed_annotation: ^2.4.4
+  shared_preferences: ^2.5.4
 
 dev_dependencies:
   flutter_test:
@@ -64,10 +65,10 @@ flutter:
   uses-material-design: true
   
   # Note: Uncomment assets when files are added
-  # assets:
+  assets:
   #   - assets/images/
   #   - assets/icons/
-  #   - .env
+    - .env
   
   # Note: Uncomment fonts after downloading from Google Fonts
   # fonts:
