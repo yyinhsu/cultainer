@@ -1,16 +1,54 @@
+import 'package:cultainer/core/theme/app_colors.dart';
+import 'package:cultainer/core/theme/app_typography.dart';
+import 'package:cultainer/core/widgets/app_button.dart';
+import 'package:cultainer/core/widgets/app_card.dart';
+import 'package:cultainer/features/auth/auth_providers.dart';
+import 'package:cultainer/features/journal/entry_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_typography.dart';
-import '../../core/widgets/app_button.dart';
-import '../../core/widgets/app_card.dart';
+/// Provider for Gemini API key.
+final geminiApiKeyProvider =
+    StateNotifierProvider<GeminiApiKeyNotifier, String?>((ref) {
+  return GeminiApiKeyNotifier();
+});
+
+class GeminiApiKeyNotifier extends StateNotifier<String?> {
+  GeminiApiKeyNotifier() : super(null) {
+    _loadKey();
+  }
+
+  static const _key = 'gemini_api_key';
+
+  Future<void> _loadKey() async {
+    final prefs = await SharedPreferences.getInstance();
+    state = prefs.getString(_key);
+  }
+
+  Future<void> setKey(String? key) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (key == null || key.isEmpty) {
+      await prefs.remove(_key);
+      state = null;
+    } else {
+      await prefs.setString(_key, key);
+      state = key;
+    }
+  }
+}
 
 /// The profile page displaying user information and settings.
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(currentUserProvider);
+    final authAction = ref.watch(authActionProvider);
+    final isLoading = authAction is AsyncLoading;
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -34,23 +72,29 @@ class ProfilePage extends StatelessWidget {
                 child: Row(
                   children: [
                     // Avatar
-                    Container(
-                      width: 72,
-                      height: 72,
-                      decoration: BoxDecoration(
-                        color: AppColors.surfaceVariant,
-                        borderRadius: BorderRadius.circular(36),
-                        border: Border.all(
-                          color: AppColors.border,
-                          width: 2,
+                    if (user?.photoURL != null)
+                      CircleAvatar(
+                        radius: 36,
+                        backgroundImage: NetworkImage(user!.photoURL!),
+                      )
+                    else
+                      Container(
+                        width: 72,
+                        height: 72,
+                        decoration: BoxDecoration(
+                          color: AppColors.surfaceVariant,
+                          borderRadius: BorderRadius.circular(36),
+                          border: Border.all(
+                            color: AppColors.border,
+                            width: 2,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.person,
+                          size: 36,
+                          color: AppColors.textSecondary,
                         ),
                       ),
-                      child: const Icon(
-                        Icons.person,
-                        size: 36,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
                     const SizedBox(width: 16),
                     // User info
                     Expanded(
@@ -58,14 +102,14 @@ class ProfilePage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Guest User',
+                            user?.displayName ?? 'Guest User',
                             style: AppTypography.headlineSmall.copyWith(
                               color: AppColors.textPrimary,
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Sign in to sync your data',
+                            user?.email ?? 'Sign in to sync your data',
                             style: AppTypography.bodySmall.copyWith(
                               color: AppColors.textSecondary,
                             ),
@@ -79,15 +123,20 @@ class ProfilePage extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              // Sign in button
+              // Stats row
+              _buildStatsRow(ref),
+
+              const SizedBox(height: 16),
+
+              // Sign out button
               SizedBox(
                 width: double.infinity,
                 child: AppButton(
-                  label: 'Sign in with Google',
-                  icon: Icons.login,
-                  onPressed: () {
-                    // TODO(auth): Implement Google Sign-In
-                  },
+                  label: isLoading ? 'Signing out…' : 'Sign Out',
+                  icon: Icons.logout,
+                  onPressed: isLoading
+                      ? null
+                      : () => ref.read(authActionProvider.notifier).signOut(),
                   isExpanded: true,
                 ),
               ),
@@ -110,10 +159,10 @@ class ProfilePage extends StatelessWidget {
                     _SettingsItem(
                       icon: Icons.key_outlined,
                       title: 'Gemini API Key',
-                      subtitle: 'Configure AI assistant',
-                      onTap: () {
-                        // TODO(settings): Open Gemini API key settings
-                      },
+                      subtitle: ref.watch(geminiApiKeyProvider) != null
+                          ? 'Configured'
+                          : 'Configure AI assistant',
+                      onTap: () => _showGeminiApiKeyDialog(context, ref),
                     ),
                     const Divider(
                       height: 1,
@@ -198,6 +247,155 @@ class ProfilePage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildStatsRow(WidgetRef ref) {
+    final countsAsync = ref.watch(entryCountsProvider);
+
+    return countsAsync.when(
+      data: (counts) => AppCard(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildStatItem(
+              '${counts['total'] ?? 0}',
+              'Total',
+              Icons.library_books,
+            ),
+            _buildStatItem(
+              '${counts['completed'] ?? 0}',
+              'Completed',
+              Icons.check_circle,
+            ),
+            _buildStatItem(
+              '${counts['in-progress'] ?? 0}',
+              'In Progress',
+              Icons.play_circle,
+            ),
+          ],
+        ),
+      ),
+      loading: () => const AppCard(
+        padding: EdgeInsets.all(16),
+        child: Center(
+          child: CircularProgressIndicator(color: AppColors.primary),
+        ),
+      ),
+      error: (_, __) => const SizedBox.shrink(),
+    );
+  }
+
+  Widget _buildStatItem(String value, String label, IconData icon) {
+    return Column(
+      children: [
+        Icon(icon, color: AppColors.primary, size: 24),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: AppTypography.numberLarge.copyWith(
+            color: AppColors.textPrimary,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: AppTypography.labelSmall.copyWith(
+            color: AppColors.textSecondary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showGeminiApiKeyDialog(BuildContext context, WidgetRef ref) {
+    final controller = TextEditingController(
+      text: ref.read(geminiApiKeyProvider),
+    );
+
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.surface,
+        title: Text(
+          'Gemini API Key',
+          style: AppTypography.headlineSmall.copyWith(
+            color: AppColors.textPrimary,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Enter your Gemini API key to enable AI features like '
+              'recommendations and insights.',
+              style: AppTypography.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: controller,
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: 'Paste your API key',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.paste),
+                  onPressed: () async {
+                    final data = await Clipboard.getData('text/plain');
+                    if (data?.text != null) {
+                      controller.text = data!.text!;
+                    }
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Get your key at aistudio.google.com',
+              style: AppTypography.labelSmall.copyWith(
+                color: AppColors.primary,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              controller.text = '';
+              ref.read(geminiApiKeyProvider.notifier).setKey(null);
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              'Clear',
+              style: AppTypography.labelMedium.copyWith(
+                color: AppColors.error,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Cancel',
+              style: AppTypography.labelMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
+            ),
+          ),
+          FilledButton(
+            onPressed: () {
+              ref.read(geminiApiKeyProvider.notifier).setKey(controller.text);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Save'),
+          ),
+        ],
       ),
     );
   }
