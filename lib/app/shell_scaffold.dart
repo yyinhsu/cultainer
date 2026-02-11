@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../core/theme/app_colors.dart';
-import '../core/widgets/bottom_nav_bar.dart';
+import 'package:cultainer/core/theme/app_colors.dart';
+import 'package:cultainer/core/widgets/bottom_nav_bar.dart';
 
 /// Shell scaffold that provides the bottom navigation bar.
 class ShellScaffold extends StatelessWidget {
@@ -29,35 +29,13 @@ class ShellScaffold extends StatelessWidget {
       case 1:
         context.go('/explore');
       case 2:
-        // TODO(nav): Open add entry modal or page
-        _showAddEntrySheet(context);
+        // Navigate to media search page first (can skip to direct entry)
+        context.push('/entry/search');
       case 3:
         context.go('/journal');
       case 4:
         context.go('/profile');
     }
-  }
-
-  void _showAddEntrySheet(BuildContext context) {
-    showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) => const SizedBox(
-        height: 300,
-        child: Center(
-          child: Text(
-            'Add Entry',
-            style: TextStyle(
-              color: AppColors.textPrimary,
-              fontSize: 18,
-            ),
-          ),
-        ),
-      ),
-    );
   }
 
   @override
