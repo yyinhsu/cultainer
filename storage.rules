@@ -1,0 +1,59 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+    
+    function isValidImage() {
+      return request.resource.contentType.matches('image/.*')
+        && request.resource.size < 10 * 1024 * 1024; // 10MB max
+    }
+    
+    function isValidImageType() {
+      return request.resource.contentType in [
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/webp'
+      ];
+    }
+
+    // User-specific storage
+    match /users/{userId}/{allPaths=**} {
+      // Users can read their own files
+      allow read: if isOwner(userId);
+      
+      // Users can write images to their own folder
+      allow write: if isOwner(userId) && isValidImage() && isValidImageType();
+      
+      // Users can delete their own files
+      allow delete: if isOwner(userId);
+    }
+    
+    // Entry covers (organized by user)
+    match /users/{userId}/covers/{coverId} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId) && isValidImage() && isValidImageType();
+      allow delete: if isOwner(userId);
+    }
+    
+    // Profile pictures
+    match /users/{userId}/profile/{fileName} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId) && isValidImage() && isValidImageType();
+      allow delete: if isOwner(userId);
+    }
+    
+    // Deny all other access by default
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
