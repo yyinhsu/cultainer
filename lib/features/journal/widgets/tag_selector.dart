@@ -1,10 +1,9 @@
+import 'package:cultainer/core/theme/app_colors.dart';
+import 'package:cultainer/core/theme/app_typography.dart';
+import 'package:cultainer/features/journal/tag_providers.dart';
+import 'package:cultainer/models/tag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:cultainer/features/core/theme/app_colors.dart';
-import 'package:cultainer/features/core/theme/app_typography.dart';
-import 'package:cultainer/features/models/tag.dart';
-import 'package:cultainer/features/journal/widgets/tag_providers.dart';
 
 /// A widget for selecting tags from a list.
 class TagSelector extends ConsumerStatefulWidget {
