@@ -44,7 +44,7 @@
 - [x] 5.3 建立 `Tag` model
 - [x] 5.4 建立 `Excerpt` model
 - [x] 5.5 實作 Firestore 序列化/反序列化
-- [ ] 5.6 建立 model 單元測試
+- [x] 5.6 建立 model 單元測試
 
 ## 6. Entry 功能
 
@@ -59,7 +59,7 @@
 ## 7. Tags 功能
 
 - [x] 7.1 建立 `TagRepository`
-- [ ] 7.2 實作 Tags 管理頁面
+- [x] 7.2 實作 Tags 管理頁面
 - [x] 7.3 實作 Tag 選擇器元件
 - [x] 7.4 整合 Tags 到 Entry 編輯流程
 
@@ -77,7 +77,7 @@
 - [x] 9.1 實作統計卡片 (Your Stats)
 - [x] 9.2 實作本週活動 → 改為 Recent Activity
 - [x] 9.3 實作最近紀錄 → 改為 Currently Enjoying
-- [ ] 9.4 實作 Collections 區塊
+- [x] 9.4 實作 Collections 區塊
 
 ## 10. Profile Page
 
@@ -90,15 +90,15 @@
 
 ## 11. 測試
 
-- [ ] 11.1 Model 單元測試
-- [ ] 11.2 Repository 單元測試
-- [ ] 11.3 Service 單元測試
-- [ ] 11.4 核心 Widget 測試
+- [x] 11.1 Model 單元測試
+- [x] 11.2 Repository 單元測試
+- [x] 11.3 Service 單元測試
+- [x] 11.4 核心 Widget 測試
 - [ ] 11.5 認證流程整合測試
 
 ## 12. 文件與發布準備
 
-- [ ] 12.1 撰寫 README.md
+- [x] 12.1 撰寫 README.md
 - [ ] 12.2 建立隱私政策文件
 - [ ] 12.3 設定 iOS App 資訊 (Info.plist)
 - [ ] 12.4 設定 Android App 資訊 (AndroidManifest.xml)

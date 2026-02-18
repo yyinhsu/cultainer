@@ -20,3 +20,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Lefthook pre-commit hooks configuration (8b7867b)
 - Environment variables template `.env.example` (8b7867b)
 - README in English and Traditional Chinese (8b7867b)
+- Tags management page with full CRUD (create, edit, delete tags with color picker)
+- "Manage Tags" shortcut in Profile settings
+- Collections section on Home page showing entry counts by media type (Books, Movies, TV, Music)
+- Comprehensive unit test suite: model tests (Entry, Tag, Excerpt, UserProfile)
+- Service unit tests for GoogleBooksService and TmdbService using mock HTTP client
+- Repository unit tests for EntryRepository and TagRepository using FakeFirebaseFirestore
+- Core widget tests for AppButton, AppCard, AppChip, AppFilterChip, AppTagChip
+- `fake_cloud_firestore` dev dependency for Firestore repository testing
