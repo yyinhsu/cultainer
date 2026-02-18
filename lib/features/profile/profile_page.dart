@@ -7,6 +7,7 @@ import 'package:cultainer/features/journal/entry_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Provider for Gemini API key.
@@ -156,6 +157,16 @@ class ProfilePage extends ConsumerWidget {
                 padding: EdgeInsets.zero,
                 child: Column(
                   children: [
+                    _SettingsItem(
+                      icon: Icons.label_outline,
+                      title: 'Manage Tags',
+                      subtitle: 'Create and edit your custom tags',
+                      onTap: () => context.push('/tags'),
+                    ),
+                    const Divider(
+                      height: 1,
+                      color: AppColors.border,
+                    ),
                     _SettingsItem(
                       icon: Icons.key_outlined,
                       title: 'Gemini API Key',
