@@ -263,7 +263,166 @@ class HomePage extends ConsumerWidget {
               ),
             ),
 
+            const SliverToBoxAdapter(child: SizedBox(height: 32)),
+
+            // Collections section
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Collections',
+                          style: AppTypography.headlineMedium.copyWith(
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () => context.go('/journal'),
+                          child: Text(
+                            'See All',
+                            style: AppTypography.labelMedium.copyWith(
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    entriesAsync.when(
+                      data: (entries) {
+                        final counts = <MediaType, int>{};
+                        for (final e in entries) {
+                          counts[e.type] = (counts[e.type] ?? 0) + 1;
+                        }
+                        final collections = [
+                          _CollectionInfo(
+                            type: MediaType.book,
+                            label: 'Books',
+                            icon: Icons.menu_book_outlined,
+                            color: AppColors.bookColor,
+                          ),
+                          _CollectionInfo(
+                            type: MediaType.movie,
+                            label: 'Movies',
+                            icon: Icons.movie_outlined,
+                            color: AppColors.movieColor,
+                          ),
+                          _CollectionInfo(
+                            type: MediaType.tv,
+                            label: 'TV Shows',
+                            icon: Icons.tv_outlined,
+                            color: AppColors.tvColor,
+                          ),
+                          _CollectionInfo(
+                            type: MediaType.music,
+                            label: 'Music',
+                            icon: Icons.music_note_outlined,
+                            color: AppColors.musicColor,
+                          ),
+                        ];
+                        return GridView.count(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          childAspectRatio: 1.6,
+                          children: collections.map((c) {
+                            return _CollectionCard(
+                              info: c,
+                              count: counts[c.type] ?? 0,
+                              onTap: () => context.go('/journal'),
+                            );
+                          }).toList(),
+                        );
+                      },
+                      loading: () => const SizedBox.shrink(),
+                      error: (_, __) => const SizedBox.shrink(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             const SliverToBoxAdapter(child: SizedBox(height: 100)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CollectionInfo {
+  const _CollectionInfo({
+    required this.type,
+    required this.label,
+    required this.icon,
+    required this.color,
+  });
+
+  final MediaType type;
+  final String label;
+  final IconData icon;
+  final Color color;
+}
+
+class _CollectionCard extends StatelessWidget {
+  const _CollectionCard({
+    required this.info,
+    required this.count,
+    required this.onTap,
+  });
+
+  final _CollectionInfo info;
+  final int count;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AppCard(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: info.color.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                info.icon,
+                color: info.color,
+                size: 20,
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$count',
+                  style: AppTypography.numberLarge.copyWith(
+                    color: AppColors.textPrimary,
+                    fontSize: 22,
+                  ),
+                ),
+                Text(
+                  info.label,
+                  style: AppTypography.labelSmall.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

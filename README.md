@@ -184,6 +184,29 @@ VS Code will prompt you to install recommended extensions when opening the proje
 - **GitLens** - Git enhancement tools
 - **Todo Tree** - TODO comment tracking
 
+## Testing
+
+The project includes a comprehensive test suite:
+
+| Category | Location | Coverage |
+|----------|----------|----------|
+| Model unit tests | `test/models/` | Entry, Tag, Excerpt, UserProfile |
+| Service unit tests | `test/services/` | GoogleBooksService, TmdbService |
+| Repository unit tests | `test/repositories/` | EntryRepository, TagRepository |
+| Widget tests | `test/widgets/` | AppButton, AppCard, AppChip |
+
+Run all tests:
+
+```bash
+flutter test
+```
+
+Run with coverage:
+
+```bash
+flutter test --coverage
+```
+
 ## Development Guidelines
 
 - Follow [Conventional Commits](https://www.conventionalcommits.org/) format

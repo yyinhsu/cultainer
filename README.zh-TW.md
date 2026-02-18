@@ -184,6 +184,29 @@ flutter build web
 - **GitLens** - Git 增強工具
 - **Todo Tree** - TODO 註解追蹤
 
+## 測試
+
+專案包含完整的測試套件：
+
+| 類別 | 路徑 | 涵蓋範圍 |
+|------|------|----------|
+| Model 單元測試 | `test/models/` | Entry, Tag, Excerpt, UserProfile |
+| Service 單元測試 | `test/services/` | GoogleBooksService, TmdbService |
+| Repository 單元測試 | `test/repositories/` | EntryRepository, TagRepository |
+| Widget 測試 | `test/widgets/` | AppButton, AppCard, AppChip |
+
+執行所有測試：
+
+```bash
+flutter test
+```
+
+執行含覆蓋率報告：
+
+```bash
+flutter test --coverage
+```
+
 ## 開發規範
 
 - 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 格式
