@@ -98,7 +98,7 @@
 
 ## 12. 文件與發布準備
 
-- [ ] 12.1 撰寫 README.md
+- [x] 12.1 撰寫 README.md
 - [ ] 12.2 建立隱私政策文件
 - [ ] 12.3 設定 iOS App 資訊 (Info.plist)
 - [ ] 12.4 設定 Android App 資訊 (AndroidManifest.xml)

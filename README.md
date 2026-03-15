@@ -20,6 +20,28 @@ A comprehensive cross-platform (iOS / macOS / Web) media consumption tracker and
 - **AI**: Google ML Kit (OCR), Gemini Pro
 - **External APIs**: Google Books, TMDB, Spotify
 
+## Current Features
+
+### Journal & Entry Management
+- Create, edit, and delete media entries (books, movies, TV shows, music)
+- Filter by type, status, and rating; full-text search
+- Auto-fill from Google Books and TMDB APIs (cover, metadata, creator ID)
+- Tag system with color-coded labels and management page
+
+### Excerpts & Knowledge Extraction
+- Save highlights, quotes, and notes as excerpts under each entry
+- View, edit, and delete excerpts with page number tracking
+- AI-powered analysis: get key concepts, background knowledge, and extended reflections via Gemini API
+
+### AI Assistant (Gemini)
+- Configure your Gemini API key in **Profile > Settings > Gemini API Key**
+- Analyze individual excerpts with one tap
+- Results can be saved alongside the excerpt for future reference
+
+### Home & Profile
+- Stats dashboard, recent activity, currently enjoying, and collections by media type
+- User profile with settings, stats, and sign-out
+
 ## Development Setup
 
 ### Prerequisites

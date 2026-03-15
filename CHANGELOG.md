@@ -23,3 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Tags management page accessible from Profile settings
 - Creator ID storage for media search results (Google Books authors, TMDB directors)
 - Collections section on Home page showing entries grouped by media type
+- Excerpt system with Firestore subcollection CRUD (ExcerptRepository, providers)
+- Excerpt UI: list section on entry detail, detail page with inline editing, add page
+- GeminiService for AI-powered excerpt analysis via REST API (gemini-2.0-flash)
+- AI analysis feature in excerpt detail page with save capability
+- Gemini API key configuration in Profile settings
+- `http` package dependency for REST API services

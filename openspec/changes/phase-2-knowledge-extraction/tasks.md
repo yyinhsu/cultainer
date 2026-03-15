@@ -17,41 +17,41 @@
 
 ## 3. Excerpt 資料模型與 Repository
 
-- [ ] 3.1 建立 `Excerpt` model
-- [ ] 3.2 建立 `ExcerptRepository` (CRUD)
-- [ ] 3.3 實作 Firestore 子集合存取
+- [x] 3.1 建立 `Excerpt` model
+- [x] 3.2 建立 `ExcerptRepository` (CRUD)
+- [x] 3.3 實作 Firestore 子集合存取
 - [ ] 3.4 建立單元測試
 
 ## 4. Excerpt UI
 
-- [ ] 4.1 在 Entry Detail 新增 Excerpts 區塊
-- [ ] 4.2 實作 Excerpt 列表元件
-- [ ] 4.3 實作 Excerpt 詳情頁面
-- [ ] 4.4 實作 Excerpt 編輯功能
-- [ ] 4.5 實作 Excerpt 刪除功能
+- [x] 4.1 在 Entry Detail 新增 Excerpts 區塊
+- [x] 4.2 實作 Excerpt 列表元件
+- [x] 4.3 實作 Excerpt 詳情頁面
+- [x] 4.4 實作 Excerpt 編輯功能
+- [x] 4.5 實作 Excerpt 刪除功能
 
 ## 5. Gemini API 整合
 
-- [ ] 5.1 新增 `google_generative_ai` 依賴
-- [ ] 5.2 建立 `GeminiService`
-- [ ] 5.3 實作 API Key 驗證
-- [ ] 5.4 實作文字分析功能
-- [ ] 5.5 實作錯誤處理（API Key 無效、額度超限等）
+- [x] 5.1 新增 `http` 依賴（改用 REST API 而非 `google_generative_ai`）
+- [x] 5.2 建立 `GeminiService`
+- [ ] 5.3 實作 API Key 驗證（方法已寫，UI 流程待串接）
+- [x] 5.4 實作文字分析功能
+- [x] 5.5 實作錯誤處理（API Key 無效、額度超限等）
 
 ## 6. Gemini API Key 設定
 
-- [ ] 6.1 在 Profile 新增 API Key 輸入欄位
-- [ ] 6.2 實作 API Key 加密儲存
+- [x] 6.1 在 Profile 新增 API Key 輸入欄位
+- [ ] 6.2 實作 API Key 加密儲存（目前用 SharedPreferences 明文）
 - [ ] 6.3 實作 API Key 驗證流程
 - [ ] 6.4 顯示 API 使用說明
 
 ## 7. AI 輔助功能介面
 
-- [ ] 7.1 在 Excerpt 詳情新增 AI 功能按鈕
-- [ ] 7.2 實作「重點解析」功能
-- [ ] 7.3 實作「摘要」功能
-- [ ] 7.4 實作「心得潤飾」功能（用於 Entry review）
-- [ ] 7.5 顯示 AI 分析結果並允許儲存
+- [x] 7.1 在 Excerpt 詳情新增 AI 功能按鈕
+- [x] 7.2 實作「重點解析」功能
+- [ ] 7.3 實作「摘要」功能（方法已寫，UI 待串接）
+- [ ] 7.4 實作「心得潤飾」功能（方法已寫，UI 待串接）
+- [x] 7.5 顯示 AI 分析結果並允許儲存
 
 ## 8. 測試
 
