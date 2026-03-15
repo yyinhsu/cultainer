@@ -7,6 +7,7 @@ import 'package:cultainer/features/journal/entry_detail_page.dart';
 import 'package:cultainer/features/journal/entry_edit_page.dart';
 import 'package:cultainer/features/journal/journal_page.dart';
 import 'package:cultainer/features/journal/media_search_page.dart';
+import 'package:cultainer/features/journal/tags_management_page.dart';
 import 'package:cultainer/features/profile/profile_page.dart';
 import 'package:cultainer/services/media_search_service.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +82,12 @@ final routerProvider = Provider<GoRouter>((ref) {
             ),
           ),
         ],
+      ),
+      // Tags management
+      GoRoute(
+        path: '/tags',
+        name: 'tags',
+        builder: (context, state) => const TagsManagementPage(),
       ),
       // Entry routes (outside shell for full-screen experience)
       GoRoute(

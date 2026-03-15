@@ -263,6 +263,42 @@ class HomePage extends ConsumerWidget {
               ),
             ),
 
+            const SliverToBoxAdapter(child: SizedBox(height: 32)),
+
+            // Collections section
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Collections',
+                      style: AppTypography.headlineMedium.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    entriesAsync.when(
+                      data: (entries) {
+                        if (entries.isEmpty) {
+                          return _EmptyStateCard(
+                            icon: Icons.collections_bookmark_outlined,
+                            message: 'No collections yet',
+                            action: 'Add entries to see them here',
+                            onTap: () => context.push('/entry/search'),
+                          );
+                        }
+                        return _CollectionsGrid(entries: entries);
+                      },
+                      loading: () => const SizedBox.shrink(),
+                      error: (_, __) => const SizedBox.shrink(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             const SliverToBoxAdapter(child: SizedBox(height: 100)),
           ],
         ),
@@ -467,6 +503,126 @@ class _RecentEntryCard extends StatelessWidget {
                 ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CollectionsGrid extends StatelessWidget {
+  const _CollectionsGrid({required this.entries});
+
+  final List<Entry> entries;
+
+  @override
+  Widget build(BuildContext context) {
+    // Group entries by type and only show types that have entries
+    final grouped = <MediaType, int>{};
+    for (final entry in entries) {
+      grouped[entry.type] = (grouped[entry.type] ?? 0) + 1;
+    }
+
+    final types = grouped.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        childAspectRatio: 1.6,
+      ),
+      itemCount: types.length,
+      itemBuilder: (context, index) {
+        final type = types[index].key;
+        final count = types[index].value;
+        return _CollectionCard(type: type, count: count);
+      },
+    );
+  }
+}
+
+class _CollectionCard extends StatelessWidget {
+  const _CollectionCard({
+    required this.type,
+    required this.count,
+  });
+
+  final MediaType type;
+  final int count;
+
+  Color get _color {
+    switch (type) {
+      case MediaType.book:
+        return AppColors.bookColor;
+      case MediaType.movie:
+        return AppColors.movieColor;
+      case MediaType.tv:
+        return AppColors.tvColor;
+      case MediaType.music:
+        return AppColors.musicColor;
+      case MediaType.other:
+        return AppColors.otherColor;
+    }
+  }
+
+  IconData get _icon {
+    switch (type) {
+      case MediaType.book:
+        return Icons.menu_book;
+      case MediaType.movie:
+        return Icons.movie;
+      case MediaType.tv:
+        return Icons.tv;
+      case MediaType.music:
+        return Icons.music_note;
+      case MediaType.other:
+        return Icons.category;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // Navigate to journal with type filter
+        context.go('/journal');
+      },
+      child: AppCard(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: _color.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(_icon, color: _color, size: 20),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${type.label}s',
+                  style: AppTypography.labelMedium.copyWith(
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                Text(
+                  '$count ${count == 1 ? 'entry' : 'entries'}',
+                  style: AppTypography.labelSmall.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

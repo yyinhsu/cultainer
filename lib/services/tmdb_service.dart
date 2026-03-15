@@ -212,6 +212,7 @@ class TmdbSearchResult {
     this.releaseDate,
     this.voteAverage,
     this.director,
+    this.directorId,
     this.genres,
     this.runtime,
     this.numberOfSeasons,
@@ -224,6 +225,7 @@ class TmdbSearchResult {
   ) {
     // Extract director from credits if available
     String? director;
+    int? directorId;
     final credits = json['credits'] as Map<String, dynamic>?;
     if (credits != null) {
       final crew = credits['crew'] as List<dynamic>?;
@@ -232,6 +234,7 @@ class TmdbSearchResult {
           final job = (member as Map<String, dynamic>)['job'] as String?;
           if (job == 'Director') {
             director = member['name'] as String?;
+            directorId = member['id'] as int?;
             break;
           }
         }
@@ -240,8 +243,9 @@ class TmdbSearchResult {
       if (director == null && mediaType == TmdbMediaType.tv) {
         final createdBy = json['created_by'] as List<dynamic>?;
         if (createdBy != null && createdBy.isNotEmpty) {
-          director =
-              (createdBy.first as Map<String, dynamic>)['name'] as String?;
+          final creator = createdBy.first as Map<String, dynamic>;
+          director = creator['name'] as String?;
+          directorId = creator['id'] as int?;
         }
       }
     }
@@ -266,6 +270,7 @@ class TmdbSearchResult {
           : json['release_date'] as String?,
       voteAverage: (json['vote_average'] as num?)?.toDouble(),
       director: director,
+      directorId: directorId,
       genres: genres,
       runtime: json['runtime'] as int?,
       numberOfSeasons: json['number_of_seasons'] as int?,
@@ -295,6 +300,9 @@ class TmdbSearchResult {
 
   /// Director (movie) or creator (TV).
   final String? director;
+
+  /// TMDB person ID for the director/creator (for recommendations).
+  final int? directorId;
 
   /// Genre names.
   final List<String>? genres;

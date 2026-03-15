@@ -102,6 +102,7 @@ class MediaSearchResult {
     required this.title,
     required this.type,
     this.creator,
+    this.creatorId,
     this.coverUrl,
     this.description,
     this.releaseYear,
@@ -115,6 +116,9 @@ class MediaSearchResult {
       title: book.title,
       type: MediaType.book,
       creator: book.authors.join(', '),
+      creatorId: book.authors.isNotEmpty
+          ? 'gbooks:author:${book.primaryAuthor}'
+          : null,
       coverUrl: book.coverUrl,
       description: book.description,
       releaseYear:
@@ -132,6 +136,8 @@ class MediaSearchResult {
       title: movie.title,
       type: MediaType.movie,
       creator: movie.director,
+      creatorId:
+          movie.directorId != null ? 'tmdb:person:${movie.directorId}' : null,
       coverUrl: movie.posterUrl,
       description: movie.overview,
       releaseYear: movie.releaseYear,
@@ -146,6 +152,8 @@ class MediaSearchResult {
       title: tvShow.title,
       type: MediaType.tv,
       creator: tvShow.director,
+      creatorId:
+          tvShow.directorId != null ? 'tmdb:person:${tvShow.directorId}' : null,
       coverUrl: tvShow.posterUrl,
       description: tvShow.overview,
       releaseYear: tvShow.releaseYear,
@@ -167,6 +175,9 @@ class MediaSearchResult {
   /// Creator (author, director, artist).
   final String? creator;
 
+  /// Creator ID from external API (for recommendations).
+  final String? creatorId;
+
   /// Cover image URL.
   final String? coverUrl;
 
@@ -187,6 +198,7 @@ class MediaSearchResult {
       type: type,
       status: EntryStatus.wishlist,
       creator: creator ?? '',
+      creatorId: creatorId,
       coverUrl: coverUrl,
       review: description,
       externalId: externalId,

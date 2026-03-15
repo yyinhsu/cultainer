@@ -45,6 +45,8 @@ class _EntryEditPageState extends ConsumerState<EntryEditPage> {
   DateTime? _startDate;
   DateTime? _endDate;
   List<String> _selectedTags = [];
+  String? _creatorId;
+  String? _externalId;
   bool _isLoading = false;
 
   @override
@@ -64,6 +66,8 @@ class _EntryEditPageState extends ConsumerState<EntryEditPage> {
     _coverUrlController.text = data.coverUrl ?? '';
     _selectedType = data.type;
     _selectedStatus = EntryStatus.wishlist;
+    _creatorId = data.creatorId;
+    _externalId = data.externalId;
   }
 
   Future<void> _loadEntry() async {
@@ -367,6 +371,8 @@ class _EntryEditPageState extends ConsumerState<EntryEditPage> {
           type: _selectedType,
           title: _titleController.text.trim(),
           creator: _creatorController.text.trim(),
+          creatorId: _creatorId,
+          externalId: _externalId,
           status: _selectedStatus,
           rating: _rating,
           review: _reviewController.text.trim().isEmpty
