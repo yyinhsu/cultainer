@@ -35,6 +35,10 @@ dependencies:
   # HTTP
   http: ^1.2.2
 
+  # OCR & Image
+  google_mlkit_text_recognition: ^0.14.0
+  image_picker: ^1.1.2
+
   # Utilities
   intl: ^0.20.1
   equatable: ^2.0.7
