@@ -59,7 +59,7 @@
 ## 7. Tags 功能
 
 - [x] 7.1 建立 `TagRepository`
-- [ ] 7.2 實作 Tags 管理頁面
+- [x] 7.2 實作 Tags 管理頁面
 - [x] 7.3 實作 Tag 選擇器元件
 - [x] 7.4 整合 Tags 到 Entry 編輯流程
 
@@ -70,14 +70,14 @@
 - [ ] 8.3 建立 `SpotifyService` (低優先級)
 - [x] 8.4 實作媒體搜尋介面
 - [x] 8.5 實作自動封面抓取
-- [ ] 8.6 儲存創作者 ID (用於 Explore 推薦)
+- [x] 8.6 儲存創作者 ID (用於 Explore 推薦)
 
 ## 9. Home Page
 
 - [x] 9.1 實作統計卡片 (Your Stats)
 - [x] 9.2 實作本週活動 → 改為 Recent Activity
 - [x] 9.3 實作最近紀錄 → 改為 Currently Enjoying
-- [ ] 9.4 實作 Collections 區塊
+- [x] 9.4 實作 Collections 區塊
 
 ## 10. Profile Page
 

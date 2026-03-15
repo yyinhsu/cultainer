@@ -20,3 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Lefthook pre-commit hooks configuration (8b7867b)
 - Environment variables template `.env.example` (8b7867b)
 - README in English and Traditional Chinese (8b7867b)
+- Tags management page accessible from Profile settings
+- Creator ID storage for media search results (Google Books authors, TMDB directors)
+- Collections section on Home page showing entries grouped by media type
