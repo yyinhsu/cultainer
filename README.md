@@ -31,11 +31,15 @@ A comprehensive cross-platform (iOS / macOS / Web) media consumption tracker and
 ### Excerpts & Knowledge Extraction
 - Save highlights, quotes, and notes as excerpts under each entry
 - View, edit, and delete excerpts with page number tracking
+- OCR text capture: photograph book pages and extract text automatically (iOS only)
 - AI-powered analysis: get key concepts, background knowledge, and extended reflections via Gemini API
+- Summarize all excerpts from an entry with one tap
 
 ### AI Assistant (Gemini)
-- Configure your Gemini API key in **Profile > Settings > Gemini API Key**
+- Configure your Gemini API key in **Profile > Settings > Gemini API Key** (with validation)
 - Analyze individual excerpts with one tap
+- Summarize multiple excerpts into a cohesive overview
+- Enhance your reviews with AI-powered writing polish
 - Results can be saved alongside the excerpt for future reference
 
 ### Home & Profile

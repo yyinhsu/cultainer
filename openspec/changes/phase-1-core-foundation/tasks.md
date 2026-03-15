@@ -44,7 +44,7 @@
 - [x] 5.3 建立 `Tag` model
 - [x] 5.4 建立 `Excerpt` model
 - [x] 5.5 實作 Firestore 序列化/反序列化
-- [ ] 5.6 建立 model 單元測試
+- [x] 5.6 建立 model 單元測試
 
 ## 6. Entry 功能
 
@@ -90,9 +90,9 @@
 
 ## 11. 測試
 
-- [ ] 11.1 Model 單元測試
-- [ ] 11.2 Repository 單元測試
-- [ ] 11.3 Service 單元測試
+- [x] 11.1 Model 單元測試
+- [ ] 11.2 Repository 單元測試（需 Firestore mock）
+- [x] 11.3 Service 單元測試
 - [ ] 11.4 核心 Widget 測試
 - [ ] 11.5 認證流程整合測試
 

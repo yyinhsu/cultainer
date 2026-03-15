@@ -29,3 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - AI analysis feature in excerpt detail page with save capability
 - Gemini API key configuration in Profile settings
 - `http` package dependency for REST API services
+- OCR text recognition via Google ML Kit (iOS only) with camera and gallery capture
+- OcrCapturePage with image source selection, text editing, and excerpt save
+- Summarize All button for excerpts (Gemini-powered multi-excerpt summary)
+- Review enhancement with AI (Gemini-powered review polishing in entry detail)
+- API key validation flow with real-time feedback in Gemini settings dialog
+- AI feature usage instructions in Gemini API key dialog
+- `google_mlkit_text_recognition` and `image_picker` dependencies

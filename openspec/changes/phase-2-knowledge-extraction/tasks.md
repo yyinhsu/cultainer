@@ -1,19 +1,19 @@
 ## 1. ML Kit OCR 整合
 
-- [ ] 1.1 新增 `google_ml_kit` 依賴
-- [ ] 1.2 設定 iOS/Android 相機權限
-- [ ] 1.3 建立 `OcrService`
-- [ ] 1.4 實作文字辨識功能
-- [ ] 1.5 處理多語言支援（中英文）
+- [x] 1.1 新增 `google_mlkit_text_recognition` 依賴
+- [ ] 1.2 設定 iOS/Android 相機權限（需在 Info.plist 設定）
+- [x] 1.3 建立 `OcrService`
+- [x] 1.4 實作文字辨識功能
+- [x] 1.5 處理多語言支援（ML Kit 預設支援中英文）
 
 ## 2. 相機 OCR 頁面
 
-- [ ] 2.1 實作相機預覽畫面
-- [ ] 2.2 實作拍照功能
-- [ ] 2.3 實作即時文字辨識
-- [ ] 2.4 顯示辨識結果並允許編輯
-- [ ] 2.5 實作儲存為 Excerpt 功能
-- [ ] 2.6 支援從相簿選取圖片
+- [x] 2.1 實作相機預覽畫面（使用 image_picker）
+- [x] 2.2 實作拍照功能
+- [x] 2.3 實作即時文字辨識
+- [x] 2.4 顯示辨識結果並允許編輯
+- [x] 2.5 實作儲存為 Excerpt 功能
+- [x] 2.6 支援從相簿選取圖片
 
 ## 3. Excerpt 資料模型與 Repository
 
@@ -34,7 +34,7 @@
 
 - [x] 5.1 新增 `http` 依賴（改用 REST API 而非 `google_generative_ai`）
 - [x] 5.2 建立 `GeminiService`
-- [ ] 5.3 實作 API Key 驗證（方法已寫，UI 流程待串接）
+- [x] 5.3 實作 API Key 驗證
 - [x] 5.4 實作文字分析功能
 - [x] 5.5 實作錯誤處理（API Key 無效、額度超限等）
 
@@ -42,20 +42,20 @@
 
 - [x] 6.1 在 Profile 新增 API Key 輸入欄位
 - [ ] 6.2 實作 API Key 加密儲存（目前用 SharedPreferences 明文）
-- [ ] 6.3 實作 API Key 驗證流程
-- [ ] 6.4 顯示 API 使用說明
+- [x] 6.3 實作 API Key 驗證流程
+- [x] 6.4 顯示 API 使用說明
 
 ## 7. AI 輔助功能介面
 
 - [x] 7.1 在 Excerpt 詳情新增 AI 功能按鈕
 - [x] 7.2 實作「重點解析」功能
-- [ ] 7.3 實作「摘要」功能（方法已寫，UI 待串接）
-- [ ] 7.4 實作「心得潤飾」功能（方法已寫，UI 待串接）
+- [x] 7.3 實作「摘要」功能
+- [x] 7.4 實作「心得潤飾」功能
 - [x] 7.5 顯示 AI 分析結果並允許儲存
 
 ## 8. 測試
 
-- [ ] 8.1 OcrService 單元測試
-- [ ] 8.2 GeminiService 單元測試
-- [ ] 8.3 ExcerptRepository 單元測試
-- [ ] 8.4 OCR 流程整合測試
+- [x] 8.1 OcrService 單元測試
+- [x] 8.2 GeminiService 單元測試
+- [ ] 8.3 ExcerptRepository 單元測試（需 Firestore mock）
+- [ ] 8.4 OCR 流程整合測試（需實機）
