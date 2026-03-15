@@ -7,6 +7,7 @@ import 'package:cultainer/features/journal/entry_detail_page.dart';
 import 'package:cultainer/features/journal/entry_edit_page.dart';
 import 'package:cultainer/features/journal/excerpt_add_page.dart';
 import 'package:cultainer/features/journal/journal_page.dart';
+import 'package:cultainer/features/journal/ocr_capture_page.dart';
 import 'package:cultainer/features/journal/media_search_page.dart';
 import 'package:cultainer/features/journal/tags_management_page.dart';
 import 'package:cultainer/features/profile/profile_page.dart';
@@ -130,6 +131,14 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final entryId = state.pathParameters['id']!;
               return ExcerptAddPage(entryId: entryId);
+            },
+          ),
+          GoRoute(
+            path: 'excerpts/ocr',
+            name: 'ocrCapture',
+            builder: (context, state) {
+              final entryId = state.pathParameters['id']!;
+              return OcrCapturePage(entryId: entryId);
             },
           ),
         ],

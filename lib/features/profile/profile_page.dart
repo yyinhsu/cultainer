@@ -4,6 +4,7 @@ import 'package:cultainer/core/widgets/app_button.dart';
 import 'package:cultainer/core/widgets/app_card.dart';
 import 'package:cultainer/features/auth/auth_providers.dart';
 import 'package:cultainer/features/journal/entry_providers.dart';
+import 'package:cultainer/services/gemini_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -325,88 +326,182 @@ class ProfilePage extends ConsumerWidget {
     final controller = TextEditingController(
       text: ref.read(geminiApiKeyProvider),
     );
+    var isValidating = false;
+    String? validationMessage;
+    var validationSuccess = false;
 
     showDialog<void>(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: AppColors.surface,
-        title: Text(
-          'Gemini API Key',
-          style: AppTypography.headlineSmall.copyWith(
-            color: AppColors.textPrimary,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          backgroundColor: AppColors.surface,
+          title: Text(
+            'Gemini API Key',
+            style: AppTypography.headlineSmall.copyWith(
+              color: AppColors.textPrimary,
+            ),
           ),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Enter your Gemini API key to enable AI features like '
-              'recommendations and insights.',
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: controller,
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: 'Paste your API key',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.paste),
-                  onPressed: () async {
-                    final data = await Clipboard.getData('text/plain');
-                    if (data?.text != null) {
-                      controller.text = data!.text!;
-                    }
-                  },
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Enter your Gemini API key to enable AI features:',
+                style: AppTypography.bodyMedium.copyWith(
+                  color: AppColors.textSecondary,
                 ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Get your key at aistudio.google.com',
-              style: AppTypography.labelSmall.copyWith(
-                color: AppColors.primary,
+              const SizedBox(height: 8),
+              Text(
+                '• Excerpt analysis (key concepts & insights)\n'
+                '• Excerpt summarization\n'
+                '• Review enhancement',
+                style: AppTypography.bodySmall.copyWith(
+                  color: AppColors.textTertiary,
+                  height: 1.5,
+                ),
               ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: controller,
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Paste your API key',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.paste),
+                    onPressed: () async {
+                      final data = await Clipboard.getData('text/plain');
+                      if (data?.text != null) {
+                        controller.text = data!.text!;
+                      }
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Get a free key at aistudio.google.com',
+                style: AppTypography.labelSmall.copyWith(
+                  color: AppColors.primary,
+                ),
+              ),
+              if (validationMessage != null) ...[
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Icon(
+                      validationSuccess
+                          ? Icons.check_circle
+                          : Icons.error_outline,
+                      size: 16,
+                      color: validationSuccess
+                          ? AppColors.completedColor
+                          : AppColors.error,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        validationMessage!,
+                        style: AppTypography.labelSmall.copyWith(
+                          color: validationSuccess
+                              ? AppColors.completedColor
+                              : AppColors.error,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                controller.text = '';
+                ref.read(geminiApiKeyProvider.notifier).setKey(null);
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Clear',
+                style: AppTypography.labelMedium.copyWith(
+                  color: AppColors.error,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(
+                'Cancel',
+                style: AppTypography.labelMedium.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ),
+            FilledButton(
+              onPressed: isValidating
+                  ? null
+                  : () async {
+                      final key = controller.text.trim();
+                      if (key.isEmpty) {
+                        await ref
+                            .read(geminiApiKeyProvider.notifier)
+                            .setKey(null);
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                        }
+                        return;
+                      }
+
+                      setDialogState(() {
+                        isValidating = true;
+                        validationMessage = null;
+                      });
+
+                      final service = GeminiService(apiKey: key);
+                      final isValid = await service.validateApiKey();
+
+                      if (!context.mounted) return;
+
+                      if (isValid) {
+                        await ref
+                            .read(geminiApiKeyProvider.notifier)
+                            .setKey(key);
+                        setDialogState(() {
+                          isValidating = false;
+                          validationSuccess = true;
+                          validationMessage = 'API key is valid!';
+                        });
+                        await Future<void>.delayed(
+                          const Duration(milliseconds: 800),
+                        );
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                        }
+                      } else {
+                        setDialogState(() {
+                          isValidating = false;
+                          validationSuccess = false;
+                          validationMessage =
+                              'Invalid API key. Please check and try again.';
+                        });
+                      }
+                    },
+              child: isValidating
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: AppColors.textPrimary,
+                      ),
+                    )
+                  : const Text('Save'),
             ),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              controller.text = '';
-              ref.read(geminiApiKeyProvider.notifier).setKey(null);
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              'Clear',
-              style: AppTypography.labelMedium.copyWith(
-                color: AppColors.error,
-              ),
-            ),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              'Cancel',
-              style: AppTypography.labelMedium.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ),
-          FilledButton(
-            onPressed: () {
-              ref.read(geminiApiKeyProvider.notifier).setKey(controller.text);
-              Navigator.of(context).pop();
-            },
-            child: const Text('Save'),
-          ),
-        ],
       ),
     );
   }

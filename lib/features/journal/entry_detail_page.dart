@@ -7,10 +7,12 @@ import 'package:cultainer/core/constants/enums.dart';
 import 'package:cultainer/core/theme/app_colors.dart';
 import 'package:cultainer/core/theme/app_typography.dart';
 import 'package:cultainer/core/widgets/app_button.dart';
+import 'package:cultainer/core/widgets/app_card.dart';
 import 'package:cultainer/features/journal/entry_providers.dart';
 import 'package:cultainer/features/journal/excerpt_detail_page.dart';
 import 'package:cultainer/features/journal/widgets/excerpt_list.dart';
 import 'package:cultainer/models/entry.dart';
+import 'package:cultainer/services/gemini_service.dart';
 
 /// Entry detail page displaying full information about a media entry.
 class EntryDetailPage extends ConsumerWidget {
@@ -126,13 +128,23 @@ class EntryDetailPage extends ConsumerWidget {
   }
 }
 
-class _EntryDetailContent extends ConsumerWidget {
+class _EntryDetailContent extends ConsumerStatefulWidget {
   const _EntryDetailContent({required this.entry});
 
   final Entry entry;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_EntryDetailContent> createState() =>
+      _EntryDetailContentState();
+}
+
+class _EntryDetailContentState extends ConsumerState<_EntryDetailContent> {
+  bool _isEnhancing = false;
+
+  Entry get entry => widget.entry;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: CustomScrollView(
@@ -175,7 +187,7 @@ class _EntryDetailContent extends ConsumerWidget {
                   ),
                   child: const Icon(Icons.delete, color: AppColors.error),
                 ),
-                onPressed: () => _showDeleteDialog(context, ref),
+                onPressed: () => _showDeleteDialog(),
               ),
             ],
             flexibleSpace: FlexibleSpaceBar(
@@ -235,11 +247,39 @@ class _EntryDetailContent extends ConsumerWidget {
 
                   // Review
                   if (entry.review != null && entry.review!.isNotEmpty) ...[
-                    Text(
-                      'Review',
-                      style: AppTypography.headlineSmall.copyWith(
-                        color: AppColors.textPrimary,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Review',
+                          style: AppTypography.headlineSmall.copyWith(
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        if (ref.watch(geminiServiceProvider).isConfigured)
+                          TextButton.icon(
+                            onPressed: _isEnhancing ? null : _enhanceReview,
+                            icon: _isEnhancing
+                                ? const SizedBox(
+                                    width: 14,
+                                    height: 14,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: AppColors.primary,
+                                    ),
+                                  )
+                                : const Icon(
+                                    Icons.auto_awesome,
+                                    size: 16,
+                                  ),
+                            label: Text(
+                              _isEnhancing ? 'Enhancing...' : 'Enhance',
+                            ),
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppColors.primary,
+                            ),
+                          ),
+                      ],
                     ),
                     const SizedBox(height: 12),
                     Text(
@@ -257,6 +297,8 @@ class _EntryDetailContent extends ConsumerWidget {
                     entryId: entry.id,
                     onAddExcerpt: () =>
                         context.push('/entry/${entry.id}/excerpts/new'),
+                    onOcrCapture: () =>
+                        context.push('/entry/${entry.id}/excerpts/ocr'),
                     onTapExcerpt: (excerpt) => Navigator.of(context).push(
                       MaterialPageRoute<void>(
                         builder: (_) => ExcerptDetailPage(excerpt: excerpt),
@@ -479,7 +521,79 @@ class _EntryDetailContent extends ConsumerWidget {
     );
   }
 
-  void _showDeleteDialog(BuildContext context, WidgetRef ref) {
+  Future<void> _enhanceReview() async {
+    if (entry.review == null || entry.review!.isEmpty) return;
+
+    setState(() => _isEnhancing = true);
+
+    try {
+      final gemini = ref.read(geminiServiceProvider);
+      final result = await gemini.enhanceReview(entry.review!, entry.title);
+      if (!mounted || result == null) return;
+
+      await showDialog<void>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          backgroundColor: AppColors.surface,
+          title: Row(
+            children: [
+              const Icon(
+                Icons.auto_awesome,
+                size: 20,
+                color: AppColors.primary,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Enhanced Review',
+                style: AppTypography.headlineSmall.copyWith(
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
+          ),
+          content: SingleChildScrollView(
+            child: AppCard(
+              padding: const EdgeInsets.all(16),
+              child: SelectableText(
+                result,
+                style: AppTypography.bodyMedium.copyWith(
+                  color: AppColors.textPrimary,
+                  height: 1.6,
+                ),
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Dismiss'),
+            ),
+            FilledButton(
+              onPressed: () async {
+                await ref
+                    .read(entryActionProvider.notifier)
+                    .updateEntry(entry.copyWith(review: result));
+                if (dialogContext.mounted) {
+                  Navigator.of(dialogContext).pop();
+                }
+              },
+              child: const Text('Apply'),
+            ),
+          ],
+        ),
+      );
+    } on GeminiException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Enhancement failed: ${e.message}')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isEnhancing = false);
+    }
+  }
+
+  void _showDeleteDialog() {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
