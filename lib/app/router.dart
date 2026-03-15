@@ -5,6 +5,7 @@ import 'package:cultainer/features/explore/explore_page.dart';
 import 'package:cultainer/features/home/home_page.dart';
 import 'package:cultainer/features/journal/entry_detail_page.dart';
 import 'package:cultainer/features/journal/entry_edit_page.dart';
+import 'package:cultainer/features/journal/excerpt_add_page.dart';
 import 'package:cultainer/features/journal/journal_page.dart';
 import 'package:cultainer/features/journal/media_search_page.dart';
 import 'package:cultainer/features/journal/tags_management_page.dart';
@@ -121,6 +122,14 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final entryId = state.pathParameters['id']!;
               return EntryEditPage(entryId: entryId);
+            },
+          ),
+          GoRoute(
+            path: 'excerpts/new',
+            name: 'newExcerpt',
+            builder: (context, state) {
+              final entryId = state.pathParameters['id']!;
+              return ExcerptAddPage(entryId: entryId);
             },
           ),
         ],

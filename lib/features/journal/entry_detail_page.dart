@@ -7,8 +7,10 @@ import 'package:cultainer/core/constants/enums.dart';
 import 'package:cultainer/core/theme/app_colors.dart';
 import 'package:cultainer/core/theme/app_typography.dart';
 import 'package:cultainer/core/widgets/app_button.dart';
-import 'package:cultainer/models/entry.dart';
 import 'package:cultainer/features/journal/entry_providers.dart';
+import 'package:cultainer/features/journal/excerpt_detail_page.dart';
+import 'package:cultainer/features/journal/widgets/excerpt_list.dart';
+import 'package:cultainer/models/entry.dart';
 
 /// Entry detail page displaying full information about a media entry.
 class EntryDetailPage extends ConsumerWidget {
@@ -249,6 +251,19 @@ class _EntryDetailContent extends ConsumerWidget {
                     ),
                     const SizedBox(height: 24),
                   ],
+
+                  // Excerpts
+                  ExcerptListSection(
+                    entryId: entry.id,
+                    onAddExcerpt: () =>
+                        context.push('/entry/${entry.id}/excerpts/new'),
+                    onTapExcerpt: (excerpt) => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => ExcerptDetailPage(excerpt: excerpt),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
 
                   // Metadata
                   if (entry.metadata.isNotEmpty) ...[
