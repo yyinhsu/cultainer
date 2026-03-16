@@ -42,3 +42,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Core widget tests for AppButton, AppTextField, AppCard, AppChip
 - SpotifyService unit tests
 - `fake_cloud_firestore` dev dependency for Firestore mocking in tests
+- Auth flow integration tests (AuthRepository, providers, router redirect logic)
+- Privacy policy document (PRIVACY_POLICY.md)
+- iOS Info.plist: camera and photo library permissions for OCR, encryption declaration
+- Android AndroidManifest.xml: internet and camera permissions, proper app label
+- Custom app icons for iOS, Android, macOS, and Web (generated via flutter_launcher_icons)

@@ -94,12 +94,12 @@
 - [x] 11.2 Repository 單元測試（需 Firestore mock）
 - [x] 11.3 Service 單元測試
 - [x] 11.4 核心 Widget 測試
-- [ ] 11.5 認證流程整合測試
+- [x] 11.5 認證流程整合測試
 
 ## 12. 文件與發布準備
 
 - [x] 12.1 撰寫 README.md
-- [ ] 12.2 建立隱私政策文件
-- [ ] 12.3 設定 iOS App 資訊 (Info.plist)
-- [ ] 12.4 設定 Android App 資訊 (AndroidManifest.xml)
-- [ ] 12.5 建立 App Icons
+- [x] 12.2 建立隱私政策文件
+- [x] 12.3 設定 iOS App 資訊 (Info.plist)
+- [x] 12.4 設定 Android App 資訊 (AndroidManifest.xml)
+- [x] 12.5 建立 App Icons

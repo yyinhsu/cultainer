@@ -1,7 +1,7 @@
 ## 1. ML Kit OCR 整合
 
 - [x] 1.1 新增 `google_mlkit_text_recognition` 依賴
-- [ ] 1.2 設定 iOS/Android 相機權限（需在 Info.plist 設定）
+- [x] 1.2 設定 iOS/Android 相機權限（需在 Info.plist 設定）
 - [x] 1.3 建立 `OcrService`
 - [x] 1.4 實作文字辨識功能
 - [x] 1.5 處理多語言支援（ML Kit 預設支援中英文）
