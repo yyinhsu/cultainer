@@ -47,3 +47,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - iOS Info.plist: camera and photo library permissions for OCR, encryption declaration
 - Android AndroidManifest.xml: internet and camera permissions, proper app label
 - Custom app icons for iOS, Android, macOS, and Web (generated via flutter_launcher_icons)
+- OCR flow integration tests for real-device testing (integration_test/)
+- `integration_test` SDK dev dependency
+
+### Changed
+- Gemini API key storage migrated from SharedPreferences (plaintext) to flutter_secure_storage (encrypted)
+
+### Removed
+- `shared_preferences` dependency (replaced by `flutter_secure_storage`)

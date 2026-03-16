@@ -20,7 +20,7 @@
 - [x] 3.1 建立 `Excerpt` model
 - [x] 3.2 建立 `ExcerptRepository` (CRUD)
 - [x] 3.3 實作 Firestore 子集合存取
-- [ ] 3.4 建立單元測試
+- [x] 3.4 建立單元測試
 
 ## 4. Excerpt UI
 
@@ -41,7 +41,7 @@
 ## 6. Gemini API Key 設定
 
 - [x] 6.1 在 Profile 新增 API Key 輸入欄位
-- [ ] 6.2 實作 API Key 加密儲存（目前用 SharedPreferences 明文）
+- [x] 6.2 實作 API Key 加密儲存（使用 flutter_secure_storage）
 - [x] 6.3 實作 API Key 驗證流程
 - [x] 6.4 顯示 API 使用說明
 
@@ -58,4 +58,4 @@
 - [x] 8.1 OcrService 單元測試
 - [x] 8.2 GeminiService 單元測試
 - [x] 8.3 ExcerptRepository 單元測試（需 Firestore mock）
-- [ ] 8.4 OCR 流程整合測試（需實機）
+- [x] 8.4 OCR 流程整合測試（需實機）

@@ -36,7 +36,7 @@ A comprehensive cross-platform (iOS / macOS / Web) media consumption tracker and
 - Summarize all excerpts from an entry with one tap
 
 ### AI Assistant (Gemini)
-- Configure your Gemini API key in **Profile > Settings > Gemini API Key** (with validation)
+- Configure your Gemini API key in **Profile > Settings > Gemini API Key** (with validation, securely encrypted on device)
 - Analyze individual excerpts with one tap
 - Summarize multiple excerpts into a cohesive overview
 - Enhance your reviews with AI-powered writing polish
