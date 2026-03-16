@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Cultainer needs camera access to capture text from book pages using OCR.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Cultainer needs photo library access to select images for OCR text recognition.</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
