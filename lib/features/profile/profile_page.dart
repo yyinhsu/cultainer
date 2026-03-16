@@ -8,8 +8,8 @@ import 'package:cultainer/services/gemini_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// Provider for Gemini API key.
 final geminiApiKeyProvider =
@@ -18,24 +18,25 @@ final geminiApiKeyProvider =
 });
 
 class GeminiApiKeyNotifier extends StateNotifier<String?> {
-  GeminiApiKeyNotifier() : super(null) {
+  GeminiApiKeyNotifier({FlutterSecureStorage? storage})
+      : _storage = storage ?? const FlutterSecureStorage(),
+        super(null) {
     _loadKey();
   }
 
   static const _key = 'gemini_api_key';
+  final FlutterSecureStorage _storage;
 
   Future<void> _loadKey() async {
-    final prefs = await SharedPreferences.getInstance();
-    state = prefs.getString(_key);
+    state = await _storage.read(key: _key);
   }
 
   Future<void> setKey(String? key) async {
-    final prefs = await SharedPreferences.getInstance();
     if (key == null || key.isEmpty) {
-      await prefs.remove(_key);
+      await _storage.delete(key: _key);
       state = null;
     } else {
-      await prefs.setString(_key, key);
+      await _storage.write(key: _key, value: key);
       state = key;
     }
   }
