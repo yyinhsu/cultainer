@@ -92,3 +92,4 @@ crashlytics.properties
 
 # Local development
 .fvm/
+TESTING_GUIDE.md

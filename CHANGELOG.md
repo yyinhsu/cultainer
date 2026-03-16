@@ -36,3 +36,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - API key validation flow with real-time feedback in Gemini settings dialog
 - AI feature usage instructions in Gemini API key dialog
 - `google_mlkit_text_recognition` and `image_picker` dependencies
+- SpotifyService for music search via Spotify Web API (client credentials flow)
+- Spotify integration in MediaSearchService unified search
+- Repository unit tests for Entry, Tag, and Excerpt (using fake_cloud_firestore)
+- Core widget tests for AppButton, AppTextField, AppCard, AppChip
+- SpotifyService unit tests
+- `fake_cloud_firestore` dev dependency for Firestore mocking in tests

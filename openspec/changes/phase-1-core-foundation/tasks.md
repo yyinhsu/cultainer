@@ -67,7 +67,7 @@
 
 - [x] 8.1 建立 `GoogleBooksService`
 - [x] 8.2 建立 `TmdbService`
-- [ ] 8.3 建立 `SpotifyService` (低優先級)
+- [x] 8.3 建立 `SpotifyService` (低優先級)
 - [x] 8.4 實作媒體搜尋介面
 - [x] 8.5 實作自動封面抓取
 - [x] 8.6 儲存創作者 ID (用於 Explore 推薦)
@@ -91,9 +91,9 @@
 ## 11. 測試
 
 - [x] 11.1 Model 單元測試
-- [ ] 11.2 Repository 單元測試（需 Firestore mock）
+- [x] 11.2 Repository 單元測試（需 Firestore mock）
 - [x] 11.3 Service 單元測試
-- [ ] 11.4 核心 Widget 測試
+- [x] 11.4 核心 Widget 測試
 - [ ] 11.5 認證流程整合測試
 
 ## 12. 文件與發布準備

@@ -25,7 +25,7 @@ A comprehensive cross-platform (iOS / macOS / Web) media consumption tracker and
 ### Journal & Entry Management
 - Create, edit, and delete media entries (books, movies, TV shows, music)
 - Filter by type, status, and rating; full-text search
-- Auto-fill from Google Books and TMDB APIs (cover, metadata, creator ID)
+- Auto-fill from Google Books, TMDB, and Spotify APIs (cover, metadata, creator ID)
 - Tag system with color-coded labels and management page
 
 ### Excerpts & Knowledge Extraction

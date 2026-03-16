@@ -57,5 +57,5 @@
 
 - [x] 8.1 OcrService 單元測試
 - [x] 8.2 GeminiService 單元測試
-- [ ] 8.3 ExcerptRepository 單元測試（需 Firestore mock）
+- [x] 8.3 ExcerptRepository 單元測試（需 Firestore mock）
 - [ ] 8.4 OCR 流程整合測試（需實機）
