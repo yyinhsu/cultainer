@@ -1,6 +1,7 @@
 import 'package:cultainer/core/constants/enums.dart';
 import 'package:cultainer/models/entry.dart';
 import 'package:cultainer/services/google_books_service.dart';
+import 'package:cultainer/services/spotify_service.dart';
 import 'package:cultainer/services/tmdb_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,10 +16,12 @@ final mediaSearchServiceProvider = Provider<MediaSearchService>((ref) {
 class MediaSearchService {
   MediaSearchService()
       : _googleBooksService = GoogleBooksService(),
-        _tmdbService = TmdbService();
+        _tmdbService = TmdbService(),
+        _spotifyService = SpotifyService();
 
   final GoogleBooksService _googleBooksService;
   final TmdbService _tmdbService;
+  final SpotifyService _spotifyService;
 
   /// Searches for media based on type.
   Future<List<MediaSearchResult>> search(
@@ -46,12 +49,12 @@ class MediaSearchService {
         results.addAll(tvShows.map(MediaSearchResult.fromTvShow));
       }
 
-      // Note: Spotify integration is lower priority
-      // if (type == null || type == MediaType.music) {
-      //   final tracks = await _spotifyService.searchTracks(query);
-      //   results.addAll(tracks.map(MediaSearchResult.fromTrack));
-      // }
-      // }
+      if (type == null || type == MediaType.music) {
+        if (_spotifyService.isConfigured) {
+          final tracks = await _spotifyService.searchTracks(query);
+          results.addAll(tracks.map(MediaSearchResult.fromTrack));
+        }
+      }
     } catch (e) {
       // Ignore individual search failures, return what we have
     }
@@ -89,9 +92,21 @@ class MediaSearchService {
     }
   }
 
+  /// Searches for music only.
+  Future<List<MediaSearchResult>> searchMusic(String query) async {
+    if (!_spotifyService.isConfigured) return [];
+    try {
+      final tracks = await _spotifyService.searchTracks(query);
+      return tracks.map(MediaSearchResult.fromTrack).toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
   void dispose() {
     _googleBooksService.dispose();
     _tmdbService.dispose();
+    _spotifyService.dispose();
   }
 }
 
@@ -142,6 +157,21 @@ class MediaSearchResult {
       description: movie.overview,
       releaseYear: movie.releaseYear,
       extraInfo: movie.runtime != null ? '${movie.runtime} min' : null,
+    );
+  }
+
+  /// Creates from a Spotify track result.
+  factory MediaSearchResult.fromTrack(SpotifySearchResult track) {
+    return MediaSearchResult(
+      externalId: 'spotify:track:${track.id}',
+      title: track.name,
+      type: MediaType.music,
+      creator: track.artist,
+      creatorId:
+          track.artistId != null ? 'spotify:artist:${track.artistId}' : null,
+      coverUrl: track.coverUrl,
+      releaseYear: track.releaseYear,
+      extraInfo: track.albumName,
     );
   }
 
