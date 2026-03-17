@@ -42,6 +42,19 @@ A comprehensive cross-platform (iOS / macOS / Web) media consumption tracker and
 - Enhance your reviews with AI-powered writing polish
 - Results can be saved alongside the excerpt for future reference
 
+### Explore & Recommendations
+- Creator-based recommendations: discover works by directors, authors, and artists you've enjoyed
+- Category filters (All, Books, Movies, TV, Music)
+- Recommendation cards grouped by creator with source context ("Because you recorded...")
+- Add to Wishlist quick action from recommendation detail
+- Offline support: cached recommendations with 1-hour TTL
+
+### Calendar
+- Month calendar view with entry indicators (dots) on recorded dates
+- Month navigation with previous/next and Today quick jump
+- Tap a date to see all entries recorded on that day
+- Accessible from Home page header
+
 ### Home & Profile
 - Stats dashboard, recent activity, currently enjoying, and collections by media type
 - User profile with settings, stats, and sign-out

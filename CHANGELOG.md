@@ -49,9 +49,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Custom app icons for iOS, Android, macOS, and Web (generated via flutter_launcher_icons)
 - OCR flow integration tests for real-device testing (integration_test/)
 - `integration_test` SDK dev dependency
+- RecommendationService: creator-based recommendation engine (TMDB directors, Google Books authors, Spotify artists)
+- Explore page with category filters, recommendation cards grouped by creator, detail bottom sheet with Add to Wishlist
+- Calendar page with month navigation, entry indicators, date selection, and entry list
+- Calendar access via icon button on Home page header
+- Recommendation caching: memory + SharedPreferences persistent cache with 1-hour TTL
+- RecommendationService unit tests (9 tests)
+- Calendar date calculation unit tests (15 tests)
+- Explore page widget tests (8 tests)
+- `shared_preferences` and `cached_network_image` dependencies
 
 ### Changed
 - Gemini API key storage migrated from SharedPreferences (plaintext) to flutter_secure_storage (encrypted)
-
-### Removed
-- `shared_preferences` dependency (replaced by `flutter_secure_storage`)
+- TMDB service extended with person movie/TV credits endpoints
+- Spotify service extended with artist albums endpoint
