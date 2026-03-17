@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
@@ -6,7 +7,7 @@ import '../theme/app_typography.dart';
 /// A reusable card component for the Cultainer app.
 ///
 /// Based on the design system with consistent styling.
-class AppCard extends StatelessWidget {
+class AppCard extends StatefulWidget {
   const AppCard({
     required this.child,
     super.key,
@@ -23,31 +24,47 @@ class AppCard extends StatelessWidget {
   final VoidCallback? onTap;
 
   @override
+  State<AppCard> createState() => _AppCardState();
+}
+
+class _AppCardState extends State<AppCard> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    final card = Container(
-      margin: margin,
+    final radius = widget.borderRadius ?? 16;
+    final card = AnimatedContainer(
+      duration: const Duration(milliseconds: 150),
+      margin: widget.margin,
       decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(borderRadius ?? 16),
-        boxShadow: const [
+        color: _isHovered && widget.onTap != null
+            ? AppColors.surfaceVariant
+            : AppColors.surface,
+        borderRadius: BorderRadius.circular(radius),
+        boxShadow: [
           BoxShadow(
-            color: Color(0x40000000),
-            blurRadius: 16,
+            color: const Color(0x40000000),
+            blurRadius: _isHovered && widget.onTap != null ? 20 : 16,
             spreadRadius: -4,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Padding(
-        padding: padding ?? const EdgeInsets.all(16),
-        child: child,
+        padding: widget.padding ?? const EdgeInsets.all(16),
+        child: widget.child,
       ),
     );
 
-    if (onTap != null) {
-      return GestureDetector(
-        onTap: onTap,
-        child: card,
+    if (widget.onTap != null) {
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: GestureDetector(
+          onTap: widget.onTap,
+          child: card,
+        ),
       );
     }
 
@@ -91,10 +108,10 @@ class ReviewCard extends StatelessWidget {
               height: 110,
               color: AppColors.surfaceVariant,
               child: coverUrl != null
-                  ? Image.network(
-                      coverUrl!,
+                  ? CachedNetworkImage(
+                      imageUrl: coverUrl!,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const _PlaceholderCover(),
+                      errorWidget: (_, __, ___) => const _PlaceholderCover(),
                     )
                   : const _PlaceholderCover(),
             ),
