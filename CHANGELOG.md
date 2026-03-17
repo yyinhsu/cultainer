@@ -58,8 +58,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Calendar date calculation unit tests (15 tests)
 - Explore page widget tests (8 tests)
 - `shared_preferences` and `cached_network_image` dependencies
+- macOS window size constraints (800x600 min, 2560x1600 max)
+- Desktop sidebar navigation replacing bottom tab bar on wide screens
+- Keyboard shortcuts support (Cmd+1-4 navigation, Cmd+N new entry)
+- macOS native menu bar (File, Go, View, Window menus)
+- Mouse hover effects on AppCard for desktop interaction
+- Responsive layout breakpoints (mobile: 600px, desktop: 800px, wideDesktop: 1200px)
+- PWA manifest.json with app metadata and theme colors
+- Service Worker for web offline support
+- App Store descriptions (English and Traditional Chinese)
+- Privacy policy in Chinese (PRIVACY_POLICY.zh-TW.md)
+- Terms of Service (TERMS_OF_SERVICE.md, TERMS_OF_SERVICE.zh-TW.md)
+- Data collection declaration for app store submissions
+- Legal document viewer in Profile page (Privacy Policy, Terms of Service)
+- Startup performance timing in debug builds
+- Paginated entries query in EntryRepository
+- Recent entries provider for optimized home page data
+- Memory monitoring utility for debug builds
+- GitHub Actions CI/CD pipeline (analyze, test, build for web/iOS/Android)
 
 ### Changed
+- All Image.network calls replaced with CachedNetworkImage for disk caching
+- All NetworkImage providers replaced with CachedNetworkImageProvider
 - Gemini API key storage migrated from SharedPreferences (plaintext) to flutter_secure_storage (encrypted)
 - TMDB service extended with person movie/TV credits endpoints
 - Spotify service extended with artist albums endpoint

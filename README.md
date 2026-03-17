@@ -59,6 +59,16 @@ A comprehensive cross-platform (iOS / macOS / Web) media consumption tracker and
 - Stats dashboard, recent activity, currently enjoying, and collections by media type
 - User profile with settings, stats, and sign-out
 
+### Platform & Desktop
+- Responsive layout: sidebar navigation on desktop, bottom tab bar on mobile
+- macOS native menu bar with keyboard shortcuts (Cmd+1-4 navigation, Cmd+N new entry)
+- Mouse hover effects on interactive cards for desktop experience
+- PWA support with offline capability for web deployment
+- Privacy Policy and Terms of Service viewable in-app
+
+### CI/CD
+- GitHub Actions pipeline: analyze, test, and build for Web, iOS, and Android on every push to main
+
 ## Development Setup
 
 ### Prerequisites
