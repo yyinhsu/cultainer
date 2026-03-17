@@ -138,6 +138,42 @@ class SpotifyService {
     }).toList();
   }
 
+  /// Gets albums by a specific artist (by Spotify artist ID).
+  Future<List<SpotifySearchResult>> getArtistAlbums(
+    String artistId, {
+    int limit = 10,
+  }) async {
+    if (!isConfigured || artistId.isEmpty) return [];
+
+    await _authenticate();
+
+    final uri = Uri.parse('$_baseUrl/artists/$artistId/albums').replace(
+      queryParameters: {
+        'include_groups': 'album',
+        'limit': limit.toString(),
+      },
+    );
+
+    final response = await _client.get(
+      uri,
+      headers: {'Authorization': 'Bearer $_accessToken'},
+    );
+
+    if (response.statusCode != 200) {
+      throw SpotifyException(
+          'Failed to get artist albums: ${response.statusCode}');
+    }
+
+    final data = json.decode(response.body) as Map<String, dynamic>;
+    final items = data['items'] as List<dynamic>?;
+
+    if (items == null) return [];
+
+    return items.map((item) {
+      return SpotifySearchResult.fromAlbumJson(item as Map<String, dynamic>);
+    }).toList();
+  }
+
   void dispose() {
     _client.close();
   }

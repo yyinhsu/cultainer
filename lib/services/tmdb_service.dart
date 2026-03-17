@@ -167,6 +167,71 @@ class TmdbService {
     }
   }
 
+  /// Gets movies directed by a person (by TMDB person ID).
+  Future<List<TmdbSearchResult>> getPersonMovieCredits(int personId) async {
+    if (_apiKey.isEmpty) return [];
+
+    final uri = Uri.parse('$_baseUrl/person/$personId/movie_credits').replace(
+      queryParameters: {'api_key': _apiKey},
+    );
+
+    try {
+      final response = await _client.get(uri);
+      if (response.statusCode != 200) return [];
+
+      final data = json.decode(response.body) as Map<String, dynamic>;
+      final crew = data['crew'] as List<dynamic>? ?? [];
+
+      return crew
+          .where(
+            (item) => (item as Map<String, dynamic>)['job'] == 'Director',
+          )
+          .map(
+            (item) => TmdbSearchResult.fromJson(
+              item as Map<String, dynamic>,
+              TmdbMediaType.movie,
+            ),
+          )
+          .toList();
+    } on Exception catch (_) {
+      return [];
+    }
+  }
+
+  /// Gets TV shows created by a person (by TMDB person ID).
+  Future<List<TmdbSearchResult>> getPersonTvCredits(int personId) async {
+    if (_apiKey.isEmpty) return [];
+
+    final uri = Uri.parse('$_baseUrl/person/$personId/tv_credits').replace(
+      queryParameters: {'api_key': _apiKey},
+    );
+
+    try {
+      final response = await _client.get(uri);
+      if (response.statusCode != 200) return [];
+
+      final data = json.decode(response.body) as Map<String, dynamic>;
+      final crew = data['crew'] as List<dynamic>? ?? [];
+
+      return crew
+          .where((item) {
+            final job = (item as Map<String, dynamic>)['job'] as String?;
+            return job == 'Director' ||
+                job == 'Creator' ||
+                job == 'Executive Producer';
+          })
+          .map(
+            (item) => TmdbSearchResult.fromJson(
+              item as Map<String, dynamic>,
+              TmdbMediaType.tv,
+            ),
+          )
+          .toList();
+    } on Exception catch (_) {
+      return [];
+    }
+  }
+
   /// Gets high quality poster URL.
   static String? getPosterUrl(
     String? posterPath, {
