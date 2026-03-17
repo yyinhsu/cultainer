@@ -1,6 +1,7 @@
 import 'package:cultainer/app/shell_scaffold.dart';
 import 'package:cultainer/features/auth/auth_providers.dart';
 import 'package:cultainer/features/auth/sign_in_page.dart';
+import 'package:cultainer/features/calendar/calendar_page.dart';
 import 'package:cultainer/features/explore/explore_page.dart';
 import 'package:cultainer/features/home/home_page.dart';
 import 'package:cultainer/features/journal/entry_detail_page.dart';
@@ -84,6 +85,12 @@ final routerProvider = Provider<GoRouter>((ref) {
             ),
           ),
         ],
+      ),
+      // Calendar
+      GoRoute(
+        path: '/calendar',
+        name: 'calendar',
+        builder: (context, state) => const CalendarPage(),
       ),
       // Tags management
       GoRoute(

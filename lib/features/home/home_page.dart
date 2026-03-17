@@ -51,30 +51,41 @@ class HomePage extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    // User avatar
-                    GestureDetector(
-                      onTap: () => context.go('/profile'),
-                      child: Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          color: AppColors.surfaceVariant,
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(color: AppColors.border),
-                          image: user?.photoURL != null
-                              ? DecorationImage(
-                                  image: NetworkImage(user!.photoURL!),
-                                  fit: BoxFit.cover,
-                                )
-                              : null,
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () => context.push('/calendar'),
+                          icon: const Icon(
+                            Icons.calendar_month_outlined,
+                            color: AppColors.textSecondary,
+                          ),
                         ),
-                        child: user?.photoURL == null
-                            ? const Icon(
-                                Icons.person,
-                                color: AppColors.textSecondary,
-                              )
-                            : null,
-                      ),
+                        // User avatar
+                        GestureDetector(
+                          onTap: () => context.go('/profile'),
+                          child: Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: AppColors.surfaceVariant,
+                              borderRadius: BorderRadius.circular(24),
+                              border: Border.all(color: AppColors.border),
+                              image: user?.photoURL != null
+                                  ? DecorationImage(
+                                      image: NetworkImage(user!.photoURL!),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : null,
+                            ),
+                            child: user?.photoURL == null
+                                ? const Icon(
+                                    Icons.person,
+                                    color: AppColors.textSecondary,
+                                  )
+                                : null,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
