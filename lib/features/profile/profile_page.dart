@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cultainer/core/theme/app_colors.dart';
 import 'package:cultainer/core/theme/app_typography.dart';
 import 'package:cultainer/core/widgets/app_button.dart';
 import 'package:cultainer/core/widgets/app_card.dart';
 import 'package:cultainer/features/auth/auth_providers.dart';
 import 'package:cultainer/features/journal/entry_providers.dart';
+import 'package:cultainer/features/profile/legal_document_page.dart';
 import 'package:cultainer/services/gemini_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -78,7 +80,8 @@ class ProfilePage extends ConsumerWidget {
                     if (user?.photoURL != null)
                       CircleAvatar(
                         radius: 36,
-                        backgroundImage: NetworkImage(user!.photoURL!),
+                        backgroundImage:
+                            CachedNetworkImageProvider(user!.photoURL!),
                       )
                     else
                       Container(
@@ -224,7 +227,14 @@ class ProfilePage extends ConsumerWidget {
                       icon: Icons.policy_outlined,
                       title: 'Privacy Policy',
                       onTap: () {
-                        // TODO(about): Open privacy policy
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => const LegalDocumentPage(
+                              title: 'Privacy Policy',
+                              assetPath: 'PRIVACY_POLICY.md',
+                            ),
+                          ),
+                        );
                       },
                     ),
                     const Divider(
@@ -235,7 +245,14 @@ class ProfilePage extends ConsumerWidget {
                       icon: Icons.description_outlined,
                       title: 'Terms of Service',
                       onTap: () {
-                        // TODO(about): Open terms of service
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => const LegalDocumentPage(
+                              title: 'Terms of Service',
+                              assetPath: 'TERMS_OF_SERVICE.md',
+                            ),
+                          ),
+                        );
                       },
                     ),
                     const Divider(

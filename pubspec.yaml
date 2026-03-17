@@ -81,6 +81,8 @@ flutter:
   #   - assets/images/
   #   - assets/icons/
     - .env
+    - PRIVACY_POLICY.md
+    - TERMS_OF_SERVICE.md
   
   # Note: Uncomment fonts after downloading from Google Fonts
   # fonts:
