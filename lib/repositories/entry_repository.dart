@@ -113,6 +113,25 @@ class EntryRepository {
     }).toList();
   }
 
+  /// Gets a paginated list of entries.
+  Future<List<Entry>> getEntriesPaginated(
+    String userId, {
+    int limit = 20,
+    DocumentSnapshot? startAfter,
+  }) async {
+    var query =
+        _entriesRef(userId).orderBy('updatedAt', descending: true).limit(limit);
+
+    if (startAfter != null) {
+      query = query.startAfterDocument(startAfter);
+    }
+
+    final snapshot = await query.get();
+    return snapshot.docs.map((doc) {
+      return Entry.fromFirestore(doc.id, doc.data());
+    }).toList();
+  }
+
   /// Gets entry counts by status.
   Future<Map<String, int>> getEntryCounts(String userId) async {
     final entries = await getEntries(userId);

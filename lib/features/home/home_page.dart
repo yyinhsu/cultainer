@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cultainer/core/constants/enums.dart';
 import 'package:cultainer/core/theme/app_colors.dart';
 import 'package:cultainer/core/theme/app_typography.dart';
@@ -72,7 +73,8 @@ class HomePage extends ConsumerWidget {
                               border: Border.all(color: AppColors.border),
                               image: user?.photoURL != null
                                   ? DecorationImage(
-                                      image: NetworkImage(user!.photoURL!),
+                                      image: CachedNetworkImageProvider(
+                                          user!.photoURL!),
                                       fit: BoxFit.cover,
                                     )
                                   : null,
@@ -447,7 +449,7 @@ class _RecentEntryCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   image: entry.coverUrl != null
                       ? DecorationImage(
-                          image: NetworkImage(entry.coverUrl!),
+                          image: CachedNetworkImageProvider(entry.coverUrl!),
                           fit: BoxFit.cover,
                         )
                       : null,
@@ -677,7 +679,7 @@ class _InProgressCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 image: entry.coverUrl != null
                     ? DecorationImage(
-                        image: NetworkImage(entry.coverUrl!),
+                        image: CachedNetworkImageProvider(entry.coverUrl!),
                         fit: BoxFit.cover,
                       )
                     : null,

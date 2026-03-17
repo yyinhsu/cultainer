@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cultainer/core/constants/enums.dart';
 import 'package:cultainer/services/media_search_service.dart';
 import 'package:flutter/material.dart';
@@ -339,10 +340,10 @@ class _MediaResultCard extends StatelessWidget {
               width: 80,
               height: 120,
               child: result.coverUrl != null
-                  ? Image.network(
-                      result.coverUrl!,
+                  ? CachedNetworkImage(
+                      imageUrl: result.coverUrl!,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => _buildPlaceholder(theme),
+                      errorWidget: (_, __, ___) => _buildPlaceholder(theme),
                     )
                   : _buildPlaceholder(theme),
             ),

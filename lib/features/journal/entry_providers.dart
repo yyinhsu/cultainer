@@ -35,6 +35,14 @@ final entryCountsProvider = FutureProvider<Map<String, int>>((ref) async {
   return repository.getEntryCounts(user.uid);
 });
 
+/// Provider for recent entries (last 5), used by the home page.
+final recentEntriesProvider = Provider<List<Entry>>((ref) {
+  final entries = ref.watch(entriesProvider).valueOrNull ?? [];
+  final sorted = [...entries]
+    ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+  return sorted.take(5).toList();
+});
+
 /// Provider for filtered entries.
 final filteredEntriesProvider = Provider<List<Entry>>((ref) {
   final entries = ref.watch(entriesProvider).valueOrNull ?? [];

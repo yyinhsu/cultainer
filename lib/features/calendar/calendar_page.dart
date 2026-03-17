@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cultainer/core/constants/enums.dart';
 import 'package:cultainer/core/theme/app_colors.dart';
 import 'package:cultainer/core/theme/app_typography.dart';
@@ -392,10 +393,10 @@ class _CalendarEntryCard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 child: entry.coverUrl != null
-                    ? Image.network(
-                        entry.coverUrl!,
+                    ? CachedNetworkImage(
+                        imageUrl: entry.coverUrl!,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const _CoverPlaceholder(),
+                        errorWidget: (_, __, ___) => const _CoverPlaceholder(),
                       )
                     : const _CoverPlaceholder(),
               ),

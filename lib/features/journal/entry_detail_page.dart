@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -333,10 +334,10 @@ class _EntryDetailContentState extends ConsumerState<_EntryDetailContent> {
 
   Widget _buildCoverImage() {
     if (entry.coverUrl != null) {
-      return Image.network(
-        entry.coverUrl!,
+      return CachedNetworkImage(
+        imageUrl: entry.coverUrl!,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _buildPlaceholderCover(),
+        errorWidget: (_, __, ___) => _buildPlaceholderCover(),
       );
     }
     return _buildPlaceholderCover();
