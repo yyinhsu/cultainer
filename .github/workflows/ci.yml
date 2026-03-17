@@ -31,6 +31,22 @@ jobs:
           echo "SPOTIFY_CLIENT_ID=test" >> .env
           echo "SPOTIFY_CLIENT_SECRET=test" >> .env
 
+      - name: Generate Firebase options stub
+        run: |
+          cat > lib/firebase_options.dart << 'DART'
+          import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+
+          class DefaultFirebaseOptions {
+            static FirebaseOptions get currentPlatform => const FirebaseOptions(
+                  apiKey: 'test',
+                  appId: 'test',
+                  messagingSenderId: 'test',
+                  projectId: 'test',
+                );
+          }
+          DART
+          dart format lib/firebase_options.dart
+
       - name: Analyze
         run: flutter analyze --no-fatal-infos
 
@@ -61,6 +77,21 @@ jobs:
           echo "TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}" > .env
           echo "SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}" >> .env
           echo "SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}" >> .env
+
+      - name: Generate Firebase options stub
+        run: |
+          cat > lib/firebase_options.dart << 'DART'
+          import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+
+          class DefaultFirebaseOptions {
+            static FirebaseOptions get currentPlatform => const FirebaseOptions(
+                  apiKey: 'test',
+                  appId: 'test',
+                  messagingSenderId: 'test',
+                  projectId: 'test',
+                );
+          }
+          DART
 
       - name: Build web
         run: flutter build web --release
@@ -93,6 +124,21 @@ jobs:
           echo "SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}" >> .env
           echo "SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}" >> .env
 
+      - name: Generate Firebase options stub
+        run: |
+          cat > lib/firebase_options.dart << 'DART'
+          import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+
+          class DefaultFirebaseOptions {
+            static FirebaseOptions get currentPlatform => const FirebaseOptions(
+                  apiKey: 'test',
+                  appId: 'test',
+                  messagingSenderId: 'test',
+                  projectId: 'test',
+                );
+          }
+          DART
+
       - name: Build iOS (no signing)
         run: flutter build ios --release --no-codesign
 
@@ -122,6 +168,21 @@ jobs:
           echo "TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}" > .env
           echo "SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}" >> .env
           echo "SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}" >> .env
+
+      - name: Generate Firebase options stub
+        run: |
+          cat > lib/firebase_options.dart << 'DART'
+          import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+
+          class DefaultFirebaseOptions {
+            static FirebaseOptions get currentPlatform => const FirebaseOptions(
+                  apiKey: 'test',
+                  appId: 'test',
+                  messagingSenderId: 'test',
+                  projectId: 'test',
+                );
+          }
+          DART
 
       - name: Build Android APK
         run: flutter build apk --release
