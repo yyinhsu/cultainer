@@ -1,13 +1,16 @@
 {
-    "name": "cultainer",
-    "short_name": "cultainer",
+    "name": "Cultainer",
+    "short_name": "Cultainer",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#121212",
+    "theme_color": "#6C63FF",
+    "description": "Track books, movies, TV shows, and music. Extract knowledge with OCR and AI.",
+    "orientation": "any",
     "prefer_related_applications": false,
+    "categories": ["entertainment", "books", "lifestyle"],
+    "lang": "en",
+    "scope": "/",
     "icons": [
         {
             "src": "icons/Icon-192.png",
